@@ -1,0 +1,2010 @@
+-- =====================================================
+-- 1. TABLA HOSPITAL
+-- =====================================================
+DROP TABLE IF EXISTS hospital CASCADE;
+CREATE TABLE hospital (
+ hospital_cod INTEGER NOT NULL,
+ nombre VARCHAR(35),
+ direccion VARCHAR(40),
+ telefono VARCHAR(12),
+ num_cama INTEGER,
+ CONSTRAINT hospital_pk PRIMARY KEY (hospital_cod)
+);
+
+select * from hospital
+
+-- DATOS DE LA TABLA HOSPITAL
+INSERT INTO hospital VALUES (13, 'Provincial', 'Donell 50', '964-426-450', 450);
+INSERT INTO hospital VALUES (18, 'General', 'Atocha s/n', '595-311-198', 198);
+INSERT INTO hospital VALUES (22, 'La Paz', 'Castellana 1000', '923-541-141', 245);
+INSERT INTO hospital VALUES (45, 'San Carlos', 'Ciudad Universitaria', '597-150-084', 845);
+
+-- DATOS NUEVOS ADICIONALES PARA HOSPITAL
+INSERT INTO hospital VALUES (11, 'Virgen del Rocio', 'Avda. Manuel Siurot s/n', '955-012-000', 1250);
+INSERT INTO hospital VALUES (12, 'Cruces', 'Plaza de Cruces s/n', '944-985-000', 980);
+INSERT INTO hospital VALUES (14, 'Virgen de la Arrixaca', 'Ctra. Madrid-Cartagena s/n', '968-369-500', 890);
+INSERT INTO hospital VALUES (15, 'Carlos Haya', 'Avda. Carlos Haya 82', '951-030-000', 750);
+INSERT INTO hospital VALUES (16, 'Miguel Servet', 'Paseo Isabel la Catolica 1', '976-765-500', 820);
+INSERT INTO hospital VALUES (17, 'La Fe', 'Avda. Fernando Abril Martorell 106', '961-246-000', 1100);
+INSERT INTO hospital VALUES (19, 'Virgen de la Salud', 'Avda. Barber 30', '925-257-500', 620);
+INSERT INTO hospital VALUES (20, 'Complejo Hospitalario de Navarra', 'C/ Irunlarrea 3', '948-422-000', 680);
+INSERT INTO hospital VALUES (21, 'Marques de Valdecilla', 'Avda. Valdecilla 25', '942-202-500', 780);
+INSERT INTO hospital VALUES (23, 'Juan Ramon Jimenez', 'Ronda de los Tejares s/n', '959-016-000', 450);
+INSERT INTO hospital VALUES (24, 'General Yague', 'Avda. del Cid 96', '947-278-000', 520);
+INSERT INTO hospital VALUES (25, 'Infanta Cristina', 'Avda. de Elvas s/n', '924-256-000', 480);
+INSERT INTO hospital VALUES (26, 'Rio Hortega', 'C/ Dulzaina 2', '983-202-000', 550);
+INSERT INTO hospital VALUES (27, 'Dr. Negrin', 'C/ Barranco de la Ballena s/n', '928-450-000', 650);
+INSERT INTO hospital VALUES (28, 'Son Espases', 'Ctra. de Valldemossa 79', '971-175-000', 900);
+INSERT INTO hospital VALUES (29, 'Complejo Asistencial de Leon', 'Altos de Nava s/n', '987-237-400', 580);
+INSERT INTO hospital VALUES (30, 'San Pedro de Alcantara', 'C/ Pablo Naranjos/n', '927-256-800', 490);
+INSERT INTO hospital VALUES (33, 'Ramon y Cajal', 'Ctra. Colmenar km 9', '913-368-200', 520);
+INSERT INTO hospital VALUES (54, 'Puerta de Hierro', 'San Martin de Porres 4', '913-167-500', 412);
+INSERT INTO hospital VALUES (66, 'Clinico San Carlos', 'Profesor Martin Lagoss/n', '913-303-000', 680);
+INSERT INTO hospital VALUES (77, 'Gregorio Marañon', 'Doctor Esquerdo 46', '915-868-000', 935);
+INSERT INTO hospital VALUES (88, 'La Princesa', 'Diego de Leon 62', '915-202-200', 328);
+INSERT INTO hospital VALUES (99, '12 de Octubre', 'Avenida de Cordoba s/n', '913-908-000', 1100);
+
+-- =====================================================
+-- 2. TABLA SALA
+-- =====================================================
+DROP TABLE IF EXISTS sala CASCADE;
+CREATE TABLE sala (
+ hospital_cod INTEGER NOT NULL,
+ sala_cod INTEGER NOT NULL,
+ nombre VARCHAR(25),
+ num_cama INTEGER,
+ CONSTRAINT sala_pk PRIMARY KEY (hospital_cod, sala_cod),
+ CONSTRAINT sala_hospital_fk FOREIGN KEY (hospital_cod) REFERENCES hospital(hospital_cod)
+);
+
+select * from sala
+
+-- DATOS DE LA TABLA SALA (originales)
+INSERT INTO sala VALUES (13, 3, 'Cuidados Intensivos', 6);
+INSERT INTO sala VALUES (13, 6, 'Psiquiátrico', 7);
+INSERT INTO sala VALUES (18, 3, 'Cuidados Intensivos', 10);
+INSERT INTO sala VALUES (18, 4, 'Cardiología', 5);
+INSERT INTO sala VALUES (22, 1, 'Recuperación', 10);
+INSERT INTO sala VALUES (22, 2, 'Psiquiátrico', 11);
+INSERT INTO sala VALUES (22, 6, 'Maternidad', 4);
+INSERT INTO sala VALUES (45, 1, 'Recuperación', 13);
+INSERT INTO sala VALUES (45, 4, 'Cardiología', 4);
+INSERT INTO sala VALUES (45, 2, 'Maternidad', 24);
+
+-- DATOS NUEVOS PARA SALA (hospitales originales)
+INSERT INTO sala VALUES (13, 1, 'Urgencias', 15);
+INSERT INTO sala VALUES (13, 2, 'Traumatología', 12);
+INSERT INTO sala VALUES (13, 4, 'Oncología', 10);
+INSERT INTO sala VALUES (13, 5, 'Cardiología', 12);
+INSERT INTO sala VALUES (13, 7, 'Traumatología', 8);
+INSERT INTO sala VALUES (18, 1, 'Urgencias', 18);
+INSERT INTO sala VALUES (18, 2, 'Pediatría', 8);
+INSERT INTO sala VALUES (18, 5, 'Maternidad', 15);
+INSERT INTO sala VALUES (18, 6, 'Traumatología', 12);
+INSERT INTO sala VALUES (18, 7, 'Neurología', 10);
+INSERT INTO sala VALUES (22, 3, 'Cardiología', 15);
+INSERT INTO sala VALUES (22, 4, 'Oncología', 12);
+INSERT INTO sala VALUES (22, 5, 'Traumatología', 14);
+INSERT INTO sala VALUES (22, 7, 'Oncología', 10);
+INSERT INTO sala VALUES (22, 8, 'Neurología', 12);
+INSERT INTO sala VALUES (45, 3, 'Traumatología', 18);
+INSERT INTO sala VALUES (45, 5, 'Oncología', 15);
+INSERT INTO sala VALUES (45, 6, 'Neurología', 12);
+INSERT INTO sala VALUES (45, 7, 'Psiquiatría', 10);
+
+-- DATOS NUEVOS PARA SALA (nuevos hospitales)
+INSERT INTO sala VALUES (11, 1, 'Urgencias', 35);
+INSERT INTO sala VALUES (11, 2, 'Cuidados Intensivos', 18);
+INSERT INTO sala VALUES (11, 3, 'Cardiología', 28);
+INSERT INTO sala VALUES (11, 4, 'Pediatría', 22);
+INSERT INTO sala VALUES (11, 5, 'Maternidad', 30);
+INSERT INTO sala VALUES (11, 6, 'Oncología', 20);
+INSERT INTO sala VALUES (11, 7, 'Traumatología', 25);
+INSERT INTO sala VALUES (11, 8, 'Neurología', 18);
+INSERT INTO sala VALUES (11, 9, 'Psiquiatría', 15);
+INSERT INTO sala VALUES (11, 10, 'Recuperación', 12);
+
+INSERT INTO sala VALUES (12, 1, 'Urgencias', 28);
+INSERT INTO sala VALUES (12, 2, 'Cardiología', 25);
+INSERT INTO sala VALUES (12, 3, 'Pediatría', 20);
+INSERT INTO sala VALUES (12, 4, 'Maternidad', 28);
+INSERT INTO sala VALUES (12, 5, 'Traumatología', 22);
+INSERT INTO sala VALUES (12, 6, 'Cuidados Intensivos', 15);
+
+INSERT INTO sala VALUES (14, 1, 'Urgencias', 30);
+INSERT INTO sala VALUES (14, 2, 'Cardiología', 24);
+INSERT INTO sala VALUES (14, 3, 'Pediatría', 18);
+INSERT INTO sala VALUES (14, 4, 'Maternidad', 26);
+INSERT INTO sala VALUES (14, 5, 'Oncología', 20);
+
+INSERT INTO sala VALUES (15, 1, 'Urgencias', 25);
+INSERT INTO sala VALUES (15, 2, 'Cardiología', 20);
+INSERT INTO sala VALUES (15, 3, 'Traumatología', 18);
+INSERT INTO sala VALUES (15, 4, 'Neurología', 15);
+INSERT INTO sala VALUES (15, 5, 'Psiquiatría', 12);
+
+INSERT INTO sala VALUES (16, 1, 'Urgencias', 32);
+INSERT INTO sala VALUES (16, 2, 'Cuidados Intensivos', 16);
+INSERT INTO sala VALUES (16, 3, 'Cardiología', 26);
+INSERT INTO sala VALUES (16, 4, 'Pediatría', 20);
+INSERT INTO sala VALUES (16, 5, 'Maternidad', 28);
+
+INSERT INTO sala VALUES (17, 1, 'Urgencias', 40);
+INSERT INTO sala VALUES (17, 2, 'Cuidados Intensivos', 22);
+INSERT INTO sala VALUES (17, 3, 'Cardiología', 35);
+INSERT INTO sala VALUES (17, 4, 'Oncología', 28);
+INSERT INTO sala VALUES (17, 5, 'Pediatría', 25);
+INSERT INTO sala VALUES (17, 6, 'Traumatología', 30);
+
+INSERT INTO sala VALUES (19, 1, 'Urgencias', 22);
+INSERT INTO sala VALUES (19, 2, 'Cardiología', 18);
+INSERT INTO sala VALUES (19, 3, 'Maternidad', 20);
+INSERT INTO sala VALUES (19, 4, 'Pediatría', 16);
+
+INSERT INTO sala VALUES (20, 1, 'Urgencias', 26);
+INSERT INTO sala VALUES (20, 2, 'Cardiología', 22);
+INSERT INTO sala VALUES (20, 3, 'Traumatología', 18);
+INSERT INTO sala VALUES (20, 4, 'Neurología', 14);
+
+INSERT INTO sala VALUES (21, 1, 'Urgencias', 28);
+INSERT INTO sala VALUES (21, 2, 'Cuidados Intensivos', 14);
+INSERT INTO sala VALUES (21, 3, 'Cardiología', 24);
+INSERT INTO sala VALUES (21, 4, 'Pediatría', 18);
+INSERT INTO sala VALUES (21, 5, 'Maternidad', 22);
+
+INSERT INTO sala VALUES (33, 1, 'Urgencias', 20);
+INSERT INTO sala VALUES (33, 2, 'Cuidados Intensivos', 10);
+INSERT INTO sala VALUES (33, 3, 'Cardiología', 15);
+INSERT INTO sala VALUES (54, 1, 'Pediatría', 12);
+INSERT INTO sala VALUES (54, 2, 'Maternidad', 18);
+INSERT INTO sala VALUES (66, 1, 'Traumatología', 14);
+INSERT INTO sala VALUES (66, 2, 'Neurología', 10);
+
+INSERT INTO sala VALUES (77, 1, 'Cardiología', 20);
+INSERT INTO sala VALUES (77, 2, 'Oncología', 16);
+INSERT INTO sala VALUES (88, 1, 'Psiquiatría', 12);
+INSERT INTO sala VALUES (99, 1, 'Urgencias', 30);
+INSERT INTO sala VALUES (99, 2, 'Cuidados Intensivos', 15);
+
+-- =====================================================
+-- 3. TABLA PLANTILLA (personal)
+-- =====================================================
+DROP TABLE IF EXISTS plantilla CASCADE;
+CREATE TABLE plantilla (
+ hospital_cod INTEGER NOT NULL,
+ sala_cod INTEGER NOT NULL,
+ empleado_no INTEGER NOT NULL,
+ apellido VARCHAR(15),
+ funcion VARCHAR(12),
+ turno VARCHAR(1),
+ salario NUMERIC(10),
+ CONSTRAINT plantilla_pk PRIMARY KEY (empleado_no),
+ CONSTRAINT plantilla_sala_fk FOREIGN KEY (hospital_cod, sala_cod) REFERENCES sala(hospital_cod, sala_cod)
+);
+
+select * from plantilla
+
+-- DATOS ORIGINALES DE PLANTILLA
+INSERT INTO plantilla VALUES (13, 6, 3754, 'Diaz B.', 'Enfermera', 'T', 2262000);
+INSERT INTO plantilla VALUES (13, 6, 3106, 'Hernandez J.', 'Enfermero', 'T',2755000);
+INSERT INTO plantilla VALUES (18, 4, 6357, 'Karplus W.', 'Interno', 'T', 3379000);
+INSERT INTO plantilla VALUES (22, 6, 1009, 'Higueras D.', 'Enfermera', 'T', 2005000);
+INSERT INTO plantilla VALUES (22, 6, 8422, 'Bocina G.', 'Enfermero', 'M', 1638000);
+INSERT INTO plantilla VALUES (22, 2, 9901, 'Nuñez C.', 'Interno', 'M', 2210000);
+INSERT INTO plantilla VALUES (22, 1, 6065, 'Rivera G.', 'Enfermera', 'N', 1626000);
+INSERT INTO plantilla VALUES (22, 1, 7379, 'Carlos R.', 'Enfermera', 'T', 2119000);
+INSERT INTO plantilla VALUES (45, 4, 1280, 'Amigo R.', 'Interno', 'N', 2210000);
+INSERT INTO plantilla VALUES (45, 1, 8526, 'Frank H.', 'Enfermera', 'T', 2522000);
+
+-- PERSONAL ADICIONAL PARA HOSPITALES ORIGINALES
+INSERT INTO plantilla VALUES (13, 1, 8101, 'Gutierrez U.', 'Médico', 'T', 4150000);
+INSERT INTO plantilla VALUES (13, 2, 8102, 'Herranz V.', 'Enfermero', 'N', 1850000);
+INSERT INTO plantilla VALUES (13, 3, 1001, 'Martinez L.', 'Médico', 'T', 3850000);
+INSERT INTO plantilla VALUES (13, 3, 1002, 'Garcia P.', 'Enfermero', 'N', 1985000);
+INSERT INTO plantilla VALUES (13, 4, 8103, 'Izquierdo W.', 'Oncólogo', 'T', 4980000);
+INSERT INTO plantilla VALUES (13, 5, 8104, 'Jara X.', 'Cardiólogo', 'M', 5050000);
+INSERT INTO plantilla VALUES (13, 7, 8105, 'Lobato Y.', 'Traumatólogo', 'T', 4520000);
+
+INSERT INTO plantilla VALUES (18, 1, 8106, 'Manuel Z.', 'Médico', 'T', 4080000);
+INSERT INTO plantilla VALUES (18, 2, 8107, 'Novoa A.', 'Pediatra', 'M', 4450000);
+INSERT INTO plantilla VALUES (18, 3, 1003, 'Rodriguez A.', 'Médico', 'T', 4200000);
+INSERT INTO plantilla VALUES (18, 4, 1004, 'Sanchez M.', 'Enfermera', 'M', 2150000);
+INSERT INTO plantilla VALUES (18, 5, 8108, 'Oliver B.', 'Ginecólogo', 'T', 4620000);
+INSERT INTO plantilla VALUES (18, 6, 8109, 'Ponce C.', 'Traumatólogo', 'N', 4550000);
+INSERT INTO plantilla VALUES (18, 7, 8110, 'Quintero D.', 'Neurólogo', 'T', 4850000);
+INSERT INTO plantilla VALUES (22, 3, 1005, 'Lopez F.', 'Cardiólogo', 'T', 5100000);
+INSERT INTO plantilla VALUES (22, 3, 8111, 'Ribera E.', 'Cardiólogo', 'T', 5180000);
+INSERT INTO plantilla VALUES (22, 4, 8112, 'Salas F.', 'Enfermera', 'M', 1980000);
+INSERT INTO plantilla VALUES (22, 5, 8113, 'Trujillo G.', 'Traumatólogo', 'T', 4580000);
+INSERT INTO plantilla VALUES (22, 7, 8114, 'Ubeda H.', 'Oncólogo', 'N', 5080000);
+INSERT INTO plantilla VALUES (22, 8, 8115, 'Valle I.', 'Neurólogo', 'T', 4950000);
+
+INSERT INTO plantilla VALUES (45, 3, 8116, 'Zamora J.', 'Traumatólogo', 'T',4620000);
+INSERT INTO plantilla VALUES (45, 5, 8117, 'Alonso K.', 'Oncólogo', 'M', 5150000);
+INSERT INTO plantilla VALUES (45, 6, 8118, 'Benitez L.', 'Neurólogo', 'T', 4920000);
+INSERT INTO plantilla VALUES (45, 7, 8119, 'Cordoba M.', 'Psiquiatra', 'N', 4280000);
+INSERT INTO plantilla VALUES (45, 1, 8120, 'Delgado N.', 'Médico', 'T', 4250000);
+
+-- PERSONAL PARA NUEVOS HOSPITALES
+INSERT INTO plantilla VALUES (11, 1, 8001, 'Gonzalez M.', 'Médico', 'T', 4250000);
+INSERT INTO plantilla VALUES (11, 1, 8002, 'Fernandez L.', 'Enfermera', 'T', 1950000);
+INSERT INTO plantilla VALUES (11, 2, 8003, 'Rodriguez P.', 'Médico', 'N', 4450000);
+INSERT INTO plantilla VALUES (11, 2, 8004, 'Martinez C.', 'Enfermero', 'N', 1880000);
+INSERT INTO plantilla VALUES (11, 3, 8005, 'Sanchez A.', 'Cardiólogo', 'T', 5280000);
+INSERT INTO plantilla VALUES (11, 3, 8006, 'Perez J.', 'Enfermera', 'T', 2150000);
+INSERT INTO plantilla VALUES (11, 4, 8007, 'Gomez R.', 'Pediatra', 'M', 4560000);
+INSERT INTO plantilla VALUES (11, 4, 8008, 'Diaz S.', 'Enfermera', 'M', 1920000);
+INSERT INTO plantilla VALUES (11, 5, 8009, 'Lopez V.', 'Ginecólogo', 'T', 4780000);
+INSERT INTO plantilla VALUES (11, 5, 8010, 'Hernandez K.', 'Enfermero', 'N', 1980000);
+INSERT INTO plantilla VALUES (11, 6, 8011, 'Torres F.', 'Oncólogo', 'T', 5120000);
+INSERT INTO plantilla VALUES (11, 6, 8012, 'Ruiz E.', 'Enfermera', 'M', 2050000);
+INSERT INTO plantilla VALUES (11, 7, 8013, 'Alvarez D.', 'Traumatólogo', 'T', 4650000);
+INSERT INTO plantilla VALUES (11, 7, 8014, 'Romero B.', 'Enfermero', 'T', 1860000);
+INSERT INTO plantilla VALUES (11, 8, 8015, 'Molina O.', 'Neurólogo', 'M', 4980000);
+INSERT INTO plantilla VALUES (11, 8, 8016, 'Suarez N.', 'Enfermera', 'N', 2020000);
+INSERT INTO plantilla VALUES (11, 9, 8017, 'Ortega H.', 'Psiquiatra', 'T', 4320000);
+INSERT INTO plantilla VALUES (11, 9, 8018, 'Blanco L.', 'Enfermero', 'T', 1780000);
+INSERT INTO plantilla VALUES (11, 10, 8019, 'Castro W.', 'Médico', 'M', 4180000);
+INSERT INTO plantilla VALUES (11, 10, 8020, 'Nuñez P.', 'Enfermera', 'N', 1850000);
+
+INSERT INTO plantilla VALUES (12, 1, 8021, 'Iglesias R.', 'Médico', 'T', 4150000);
+INSERT INTO plantilla VALUES (12, 1, 8022, 'Jimeno G.', 'Enfermero', 'T', 1880000);
+INSERT INTO plantilla VALUES (12, 2, 8023, 'Calvo M.', 'Cardiólogo', 'M', 5050000);
+INSERT INTO plantilla VALUES (12, 2, 8024, 'Ramos C.', 'Enfermera', 'M', 1980000);
+INSERT INTO plantilla VALUES (12, 3, 8025, 'Gilberto E.', 'Pediatra', 'T', 4480000);
+INSERT INTO plantilla VALUES (12, 3, 8026, 'Martinez B.', 'Enfermera', 'T', 1920000);
+INSERT INTO plantilla VALUES (12, 4, 8027, 'Saenz A.', 'Ginecólogo', 'N', 4720000);
+INSERT INTO plantilla VALUES (12, 4, 8028, 'Vazquez L.', 'Enfermero', 'N', 1960000);
+INSERT INTO plantilla VALUES (12, 5, 8029, 'Serrano F.', 'Traumatólogo', 'T',4580000);
+INSERT INTO plantilla VALUES (12, 5, 8030, 'Gallardo S.', 'Enfermera', 'T', 1880000);
+INSERT INTO plantilla VALUES (12, 6, 8031, 'Peña D.', 'Médico', 'T', 4250000);
+INSERT INTO plantilla VALUES (12, 6, 8032, 'Crespo J.', 'Enfermero', 'N', 1820000);
+
+INSERT INTO plantilla VALUES (14, 1, 8033, 'Leon M.', 'Médico', 'T', 4080000);
+INSERT INTO plantilla VALUES (14, 1, 8034, 'Dominguez O.', 'Enfermera', 'T', 1950000);
+INSERT INTO plantilla VALUES (14, 2, 8035, 'Vega T.', 'Cardiólogo', 'M', 5150000);
+INSERT INTO plantilla VALUES (14, 2, 8036, 'Fuentes R.', 'Enfermero', 'M', 2020000);
+INSERT INTO plantilla VALUES (14, 3, 8037, 'Aguilar S.', 'Pediatra', 'T', 4420000);
+INSERT INTO plantilla VALUES (14, 3, 8038, 'Cabrera A.', 'Enfermera', 'T', 1880000);
+INSERT INTO plantilla VALUES (14, 4, 8039, 'Mendoza B.', 'Ginecólogo', 'N', 4680000);
+INSERT INTO plantilla VALUES (14, 4, 8040, 'Castillo L.', 'Enfermero', 'N', 1920000);
+INSERT INTO plantilla VALUES (14, 5, 8041, 'Rios F.', 'Oncólogo', 'T', 5080000);
+INSERT INTO plantilla VALUES (14, 5, 8042, 'Paz K.', 'Enfermera', 'T', 1980000);
+
+INSERT INTO plantilla VALUES (15, 1, 8043, 'Mora H.', 'Médico', 'T', 4120000);
+INSERT INTO plantilla VALUES (15, 1, 8044, 'Soto C.', 'Enfermero', 'T', 1850000);
+INSERT INTO plantilla VALUES (15, 2, 8045, 'Rojas D.', 'Cardiólogo', 'M', 4980000);
+INSERT INTO plantilla VALUES (15, 2, 8046, 'Cruz E.', 'Enfermera', 'M', 1950000);
+INSERT INTO plantilla VALUES (15, 3, 8047, 'Carrasco E.', 'Traumatólogo', 'T', 4550000);
+INSERT INTO plantilla VALUES (15, 3, 8048, 'Hidalgo R.', 'Enfermero', 'T', 1820000);
+INSERT INTO plantilla VALUES (15, 4, 8049, 'Mendez F.', 'Neurólogo', 'N', 4880000);
+INSERT INTO plantilla VALUES (15, 4, 8050, 'Pastor L.', 'Enfermera', 'N', 1980000);
+INSERT INTO plantilla VALUES (15, 5, 8051, 'Bravo G.', 'Psiquiatra', 'T', 4250000);
+INSERT INTO plantilla VALUES (15, 5, 8052, 'Vidal S.', 'Enfermero', 'T', 1780000);
+
+INSERT INTO plantilla VALUES (16, 1, 8053, 'Blazquez J.', 'Médico', 'T', 4220000);
+INSERT INTO plantilla VALUES (16, 1, 8054, 'Herrero P.', 'Enfermera', 'T', 1920000);
+INSERT INTO plantilla VALUES (16, 2, 8055, 'Calderon A.', 'Médico', 'N', 4350000);
+INSERT INTO plantilla VALUES (16, 2, 8056, 'Arias B.', 'Enfermero', 'N', 1880000);
+INSERT INTO plantilla VALUES (16, 3, 8057, 'Marquez C.', 'Cardiólogo', 'T', 5220000);
+INSERT INTO plantilla VALUES (16, 3, 8058, 'Pascual D.', 'Enfermera', 'T', 2050000);
+INSERT INTO plantilla VALUES (16, 4, 8059, 'Vicente E.', 'Pediatra', 'M', 4520000);
+INSERT INTO plantilla VALUES (16, 4, 8060, 'Ballesteros F.', 'Enfermero', 'M', 1850000);
+INSERT INTO plantilla VALUES (16, 5, 8061, 'Ferrer G.', 'Ginecólogo', 'T', 4750000);
+INSERT INTO plantilla VALUES (16, 5, 8062, 'Lorenzo H.', 'Enfermera', 'T', 1950000);
+
+INSERT INTO plantilla VALUES (17, 1, 8063, 'Luque I.', 'Médico', 'T', 4350000);
+INSERT INTO plantilla VALUES (17, 1, 8064, 'Gallego J.', 'Enfermero', 'T', 1980000);
+INSERT INTO plantilla VALUES (17, 2, 8065, 'Barrios K.', 'Médico', 'N', 4480000);
+INSERT INTO plantilla VALUES (17, 2, 8066, 'Lara L.', 'Enfermera', 'N', 2020000);
+INSERT INTO plantilla VALUES (17, 3, 8067, 'Ortiz M.', 'Cardiólogo', 'T', 5350000);
+INSERT INTO plantilla VALUES (17, 3, 8068, 'Plaza N.', 'Enfermera', 'T', 2150000);
+INSERT INTO plantilla VALUES (17, 4, 8069, 'Santos O.', 'Oncólogo', 'M', 5250000);
+INSERT INTO plantilla VALUES (17, 4, 8070, 'Cano P.', 'Enfermero', 'M', 2080000);
+INSERT INTO plantilla VALUES (17, 5, 8071, 'Duran Q.', 'Pediatra', 'T', 4620000);
+INSERT INTO plantilla VALUES (17, 5, 8072, 'Montero R.', 'Enfermera', 'T', 1950000);
+INSERT INTO plantilla VALUES (17, 6, 8073, 'Navarro S.', 'Traumatólogo', 'T', 4680000);
+INSERT INTO plantilla VALUES (17, 6, 8074, 'Rey T.', 'Enfermero', 'N', 1880000);
+INSERT INTO plantilla VALUES (19, 1, 8075, 'Segura U.', 'Médico', 'T', 4050000);
+INSERT INTO plantilla VALUES (19, 1, 8076, 'Plaza V.', 'Enfermera', 'T', 1850000);
+INSERT INTO plantilla VALUES (19, 2, 8077, 'Cebrian W.', 'Cardiólogo', 'M', 4950000);
+INSERT INTO plantilla VALUES (19, 2, 8078, 'Quiros X.', 'Enfermero', 'M', 1920000);
+INSERT INTO plantilla VALUES (19, 3, 8079, 'Nieto Y.', 'Ginecólogo', 'T', 4650000);
+INSERT INTO plantilla VALUES (19, 3, 8080, 'Pacheco Z.', 'Enfermera', 'T', 1880000);
+INSERT INTO plantilla VALUES (19, 4, 8081, 'Manzano A.', 'Pediatra', 'N', 4380000);
+INSERT INTO plantilla VALUES (19, 4, 8082, 'Aguilera B.', 'Enfermero', 'N', 1820000);
+
+INSERT INTO plantilla VALUES (20, 1, 8083, 'Castellanos C.', 'Médico', 'T', 4180000);
+INSERT INTO plantilla VALUES (20, 1, 8084, 'Varela D.', 'Enfermera', 'T', 1920000);
+INSERT INTO plantilla VALUES (20, 2, 8085, 'Perales E.', 'Cardiólogo', 'M', 5080000);
+INSERT INTO plantilla VALUES (20, 2, 8086, 'Maestre F.', 'Enfermero', 'M', 1980000);
+INSERT INTO plantilla VALUES (20, 3, 8087, 'Belmonte G.', 'Traumatólogo', 'T', 4480000);
+INSERT INTO plantilla VALUES (20, 3, 8088, 'Berrocal H.', 'Enfermera', 'T', 1850000);
+INSERT INTO plantilla VALUES (20, 4, 8089, 'Villena I.', 'Neurólogo', 'N', 4780000);
+INSERT INTO plantilla VALUES (20, 4, 8090, 'Cebrian J.', 'Enfermero', 'N', 1920000);
+
+INSERT INTO plantilla VALUES (21, 1, 8091, 'Maldonado K.', 'Médico', 'T', 4250000);
+INSERT INTO plantilla VALUES (21, 1, 8092, 'Palacios L.', 'Enfermera', 'T', 1950000);
+INSERT INTO plantilla VALUES (21, 2, 8093, 'Olmedo M.', 'Médico', 'N', 4350000);
+INSERT INTO plantilla VALUES (21, 2, 8094, 'Almagro N.', 'Enfermero', 'N', 1880000);
+INSERT INTO plantilla VALUES (21, 3, 8095, 'Carretero O.', 'Cardiólogo', 'T', 5150000);
+INSERT INTO plantilla VALUES (21, 3, 8096, 'Bustos P.', 'Enfermera', 'T', 2050000);
+INSERT INTO plantilla VALUES (21, 4, 8097, 'Cazorla Q.', 'Pediatra', 'M', 4550000);
+INSERT INTO plantilla VALUES (21, 4, 8098, 'Domingo R.', 'Enfermero', 'M', 1880000);
+INSERT INTO plantilla VALUES (21, 5, 8099, 'Escobar S.', 'Ginecólogo', 'T', 4750000);
+INSERT INTO plantilla VALUES (21, 5, 8100, 'Falcon T.', 'Enfermera', 'T', 1980000);
+INSERT INTO plantilla VALUES (33, 2, 2001, 'Torres R.', 'Médico', 'T', 3980000);
+INSERT INTO plantilla VALUES (33, 2, 2002, 'Ramirez S.', 'Enfermero', 'N', 1890000);
+INSERT INTO plantilla VALUES (33, 3, 2003, 'Castillo M.', 'Cardiólogo', 'T', 4950000);
+INSERT INTO plantilla VALUES (54, 1, 3001, 'Vega C.', 'Pediatra', 'M', 4650000);
+INSERT INTO plantilla VALUES (54, 2, 3002, 'Mendoza L.', 'Ginecólogo', 'T', 4780000);
+INSERT INTO plantilla VALUES (54, 2, 3003, 'Cruz A.', 'Enfermera', 'N', 2050000);
+INSERT INTO plantilla VALUES (66, 1, 4001, 'Paz J.', 'Traumatólogo', 'T', 4450000);
+INSERT INTO plantilla VALUES (66, 2, 4002, 'Rios E.', 'Neurólogo', 'M', 4880000);
+INSERT INTO plantilla VALUES (77, 1, 5001, 'Mora H.', 'Cardiólogo', 'T', 5250000);
+INSERT INTO plantilla VALUES (77, 2, 5002, 'Soto G.', 'Oncólogo', 'M', 5120000);
+INSERT INTO plantilla VALUES (88, 1, 6001, 'Rojas K.', 'Psiquiatra', 'T', 4320000);
+INSERT INTO plantilla VALUES (88, 1, 6002, 'Diaz B.', 'Enfermero', 'N', 1960000);
+INSERT INTO plantilla VALUES (99, 1, 7001, 'Fuentes P.', 'Médico', 'T', 4050000);
+INSERT INTO plantilla VALUES (99, 2, 7002, 'Aguilar R.', 'Enfermero', 'N', 1920000);
+INSERT INTO plantilla VALUES (99, 2, 7003, 'Navarro S.', 'Médico', 'M', 4150000);
+
+-- =====================================================
+-- 4. TABLA OCUPACION
+-- =====================================================
+DROP TABLE IF EXISTS ocupacion CASCADE;
+CREATE TABLE ocupacion (
+ inscripcion INTEGER NOT NULL,
+ hospital_cod INTEGER NOT NULL,
+ sala_cod INTEGER NOT NULL,
+ cama INTEGER,
+ CONSTRAINT ocupacion_pk PRIMARY KEY (inscripcion, hospital_cod, sala_cod)
+);
+
+select * from ocupacion
+
+-- DATOS ORIGINALES DE OCUPACION
+INSERT INTO ocupacion VALUES (10995, 13, 3, 1);
+INSERT INTO ocupacion VALUES (18004, 13, 3, 2);
+INSERT INTO ocupacion VALUES (14024, 13, 3, 3);
+INSERT INTO ocupacion VALUES (36658, 18, 4, 1);
+INSERT INTO ocupacion VALUES (38702, 18, 4, 2);
+INSERT INTO ocupacion VALUES (39217, 22, 6, 3);
+INSERT INTO ocupacion VALUES (59076, 22, 6, 2);
+INSERT INTO ocupacion VALUES (63827, 22, 6, 3);
+INSERT INTO ocupacion VALUES (64823, 22, 2, 2);
+INSERT INTO ocupacion VALUES (74835, 45, 4, 2);
+
+-- NUEVAS OCUPACIONES
+INSERT INTO ocupacion VALUES (11001, 33, 2, 5);
+INSERT INTO ocupacion VALUES (11002, 33, 3, 3);
+INSERT INTO ocupacion VALUES (11003, 54, 1, 8);
+INSERT INTO ocupacion VALUES (11004, 54, 2, 12);
+INSERT INTO ocupacion VALUES (11005, 66, 1, 4);
+INSERT INTO ocupacion VALUES (11006, 66, 2, 7);
+INSERT INTO ocupacion VALUES (11007, 77, 1, 6);
+INSERT INTO ocupacion VALUES (11008, 77, 2, 9);
+INSERT INTO ocupacion VALUES (11009, 88, 1, 2);
+INSERT INTO ocupacion VALUES (11010, 99, 1, 15);
+INSERT INTO ocupacion VALUES (11011, 99, 2, 8);
+INSERT INTO ocupacion VALUES (11012, 45, 1, 10);
+INSERT INTO ocupacion VALUES (11013, 22, 3, 4);
+INSERT INTO ocupacion VALUES (11014, 18, 2, 6);
+INSERT INTO ocupacion VALUES (11015, 13, 1, 11);
+
+-- OCUPACIONES PARA NUEVOS PACIENTES
+INSERT INTO ocupacion VALUES (11016, 11, 1, 12);
+INSERT INTO ocupacion VALUES (11017, 11, 1, 18);
+INSERT INTO ocupacion VALUES (11018, 11, 2, 5);
+INSERT INTO ocupacion VALUES (11019, 11, 2, 9);
+INSERT INTO ocupacion VALUES (11020, 11, 3, 15);
+INSERT INTO ocupacion VALUES (11021, 11, 4, 8);
+INSERT INTO ocupacion VALUES (11022, 11, 5, 22);
+INSERT INTO ocupacion VALUES (11023, 11, 6, 14);
+INSERT INTO ocupacion VALUES (11024, 11, 7, 3);
+INSERT INTO ocupacion VALUES (11025, 11, 8, 17);
+INSERT INTO ocupacion VALUES (11026, 11, 9, 11);
+INSERT INTO ocupacion VALUES (11027, 11, 10, 6);
+INSERT INTO ocupacion VALUES (11028, 12, 1, 8);
+INSERT INTO ocupacion VALUES (11029, 12, 1, 15);
+INSERT INTO ocupacion VALUES (11030, 12, 2, 12);
+INSERT INTO ocupacion VALUES (11031, 12, 3, 5);
+INSERT INTO ocupacion VALUES (11032, 12, 4, 18);
+INSERT INTO ocupacion VALUES (11033, 12, 5, 9);
+INSERT INTO ocupacion VALUES (11034, 12, 6, 3);
+INSERT INTO ocupacion VALUES (11035, 14, 1, 20);
+INSERT INTO ocupacion VALUES (11036, 14, 1, 25);
+INSERT INTO ocupacion VALUES (11037, 14, 2, 8);
+INSERT INTO ocupacion VALUES (11038, 14, 3, 12);
+INSERT INTO ocupacion VALUES (11039, 14, 4, 15);
+INSERT INTO ocupacion VALUES (11040, 14, 5, 7);
+INSERT INTO ocupacion VALUES (11041, 15, 1, 14);
+INSERT INTO ocupacion VALUES (11042, 15, 2, 9);
+INSERT INTO ocupacion VALUES (11043, 15, 3, 6);
+INSERT INTO ocupacion VALUES (11044, 15, 4, 11);
+INSERT INTO ocupacion VALUES (11045, 15, 5, 4);
+INSERT INTO ocupacion VALUES (11046, 16, 1, 22);
+INSERT INTO ocupacion VALUES (11047, 16, 2, 8);
+INSERT INTO ocupacion VALUES (11048, 16, 3, 16);
+INSERT INTO ocupacion VALUES (11049, 16, 4, 10);
+INSERT INTO ocupacion VALUES (11050, 16, 5, 19);
+INSERT INTO ocupacion VALUES (11051, 17, 1, 28);
+INSERT INTO ocupacion VALUES (11052, 17, 1, 35);
+INSERT INTO ocupacion VALUES (11053, 17, 2, 12);
+INSERT INTO ocupacion VALUES (11054, 17, 3, 22);
+INSERT INTO ocupacion VALUES (11055, 17, 4, 15);
+INSERT INTO ocupacion VALUES (11056, 17, 5, 18);
+INSERT INTO ocupacion VALUES (11057, 17, 6, 9);
+INSERT INTO ocupacion VALUES (11058, 18, 1, 5);
+INSERT INTO ocupacion VALUES (11059, 18, 2, 8);
+INSERT INTO ocupacion VALUES (11060, 18, 5, 12);
+INSERT INTO ocupacion VALUES (11061, 18, 6, 4);
+INSERT INTO ocupacion VALUES (11062, 18, 7, 9);
+INSERT INTO ocupacion VALUES (11063, 19, 1, 10);
+INSERT INTO ocupacion VALUES (11064, 19, 2, 7);
+INSERT INTO ocupacion VALUES (11065, 19, 3, 14);
+INSERT INTO ocupacion VALUES (11066, 19, 4, 5);
+INSERT INTO ocupacion VALUES (11067, 20, 1, 15);
+INSERT INTO ocupacion VALUES (11068, 20, 2, 11);
+INSERT INTO ocupacion VALUES (11069, 20, 3, 8);
+INSERT INTO ocupacion VALUES (11070, 20, 4, 6);
+INSERT INTO ocupacion VALUES (11071, 21, 1, 18);
+INSERT INTO ocupacion VALUES (11072, 21, 2, 7);
+INSERT INTO ocupacion VALUES (11073, 21, 3, 14);
+INSERT INTO ocupacion VALUES (11074, 21, 4, 9);
+INSERT INTO ocupacion VALUES (11075, 21, 5, 12);
+INSERT INTO ocupacion VALUES (11076, 22, 4, 6);
+INSERT INTO ocupacion VALUES (11077, 22, 5, 11);
+INSERT INTO ocupacion VALUES (11078, 22, 7, 3);
+INSERT INTO ocupacion VALUES (11079, 22, 8, 8);
+INSERT INTO ocupacion VALUES (11080, 22, 1, 5);
+INSERT INTO ocupacion VALUES (11081, 33, 1, 12);
+INSERT INTO ocupacion VALUES (11082, 33, 2, 8);
+INSERT INTO ocupacion VALUES (11083, 33, 3, 10);
+INSERT INTO ocupacion VALUES (11084, 45, 3, 14);
+INSERT INTO ocupacion VALUES (11085, 45, 5, 7);
+INSERT INTO ocupacion VALUES (11086, 45, 6, 5);
+INSERT INTO ocupacion VALUES (11087, 45, 7, 3);
+INSERT INTO ocupacion VALUES (11088, 45, 1, 9);
+INSERT INTO ocupacion VALUES (11089, 54, 1, 6);
+INSERT INTO ocupacion VALUES (11090, 54, 2, 15);
+INSERT INTO ocupacion VALUES (11091, 66, 1, 8);
+INSERT INTO ocupacion VALUES (11092, 66, 2, 4);
+INSERT INTO ocupacion VALUES (11093, 77, 1, 12);
+INSERT INTO ocupacion VALUES (11094, 77, 2, 7);
+INSERT INTO ocupacion VALUES (11095, 88, 1, 5);
+INSERT INTO ocupacion VALUES (11096, 99, 1, 22);
+INSERT INTO ocupacion VALUES (11097, 99, 2, 10);
+INSERT INTO ocupacion VALUES (11098, 99, 1, 28);
+INSERT INTO ocupacion VALUES (11099, 99, 2, 14);
+INSERT INTO ocupacion VALUES (11100, 99, 1, 8);
+INSERT INTO ocupacion VALUES (11101, 33, 1, 18);
+INSERT INTO ocupacion VALUES (11102, 33, 2, 6);
+INSERT INTO ocupacion VALUES (11103, 45, 2, 12);
+INSERT INTO ocupacion VALUES (11104, 45, 4, 3);
+INSERT INTO ocupacion VALUES (11105, 22, 2, 8);
+
+-- =====================================================
+-- 5. TABLA DOCTOR
+-- =====================================================
+DROP TABLE IF EXISTS doctor CASCADE;
+CREATE TABLE doctor (
+ hospital_cod INTEGER NOT NULL,
+ doctor_no INTEGER NOT NULL,
+ apellido VARCHAR(15),
+ especialidad VARCHAR(16),
+ CONSTRAINT doctor_pk PRIMARY KEY (doctor_no),
+ CONSTRAINT doctor_hospital_fk FOREIGN KEY (hospital_cod) REFERENCES hospital(hospital_cod)
+);
+
+select * from doctor
+
+-- DATOS ORIGINALES DE DOCTOR
+INSERT INTO doctor VALUES (13, 435, 'Lopez A.', 'Cardiología');
+INSERT INTO doctor VALUES (18, 585, 'Miller G.', 'Ginecología');
+INSERT INTO doctor VALUES (18, 982, 'Cajal R.', 'Cardiología');
+INSERT INTO doctor VALUES (22, 453, 'Galo D.', 'Pediatría');
+INSERT INTO doctor VALUES (22, 398, 'Best K.', 'Urología');
+INSERT INTO doctor VALUES (22, 386, 'Cabeza D.', 'Psiquiatría');
+INSERT INTO doctor VALUES (45, 607, 'Niño P.', 'Pediatría');
+INSERT INTO doctor VALUES (45, 522, 'Adams C.', 'Neurología');
+
+-- DOCTORES ADICIONALES
+INSERT INTO doctor VALUES (11, 200, 'Martinez P.', 'Cardiología');
+INSERT INTO doctor VALUES (11, 201, 'Fernandez R.', 'Pediatría');
+INSERT INTO doctor VALUES (11, 202, 'Rodriguez S.', 'Ginecología');
+INSERT INTO doctor VALUES (11, 203, 'Sanchez T.', 'Oncología');
+INSERT INTO doctor VALUES (11, 204, 'Perez U.', 'Traumatología');
+INSERT INTO doctor VALUES (11, 205, 'Gomez V.', 'Neurología');
+INSERT INTO doctor VALUES (11, 206, 'Diaz W.', 'Psiquiatría');
+INSERT INTO doctor VALUES (11, 207, 'Lopez X.', 'Urgencias');
+INSERT INTO doctor VALUES (12, 208, 'Hernandez Y.', 'Cardiología');
+INSERT INTO doctor VALUES (12, 209, 'Torres Z.', 'Pediatría');
+INSERT INTO doctor VALUES (12, 210, 'Ruiz A.', 'Ginecología');
+INSERT INTO doctor VALUES (12, 211, 'Alvarez B.', 'Traumatología');
+INSERT INTO doctor VALUES (14, 212, 'Romero C.', 'Cardiología');
+INSERT INTO doctor VALUES (14, 213, 'Molina D.', 'Pediatría');
+INSERT INTO doctor VALUES (14, 214, 'Suarez E.', 'Oncología');
+INSERT INTO doctor VALUES (15, 215, 'Ortega F.', 'Traumatología');
+INSERT INTO doctor VALUES (15, 216, 'Blanco G.', 'Neurología');
+INSERT INTO doctor VALUES (15, 217, 'Castro H.', 'Psiquiatría');
+INSERT INTO doctor VALUES (16, 218, 'Nuñez I.', 'Cardiología');
+INSERT INTO doctor VALUES (16, 219, 'Iglesias J.', 'Pediatría');
+INSERT INTO doctor VALUES (16, 220, 'Jimeno K.', 'Ginecología');
+INSERT INTO doctor VALUES (17, 221, 'Calvo L.', 'Cardiología');
+INSERT INTO doctor VALUES (17, 222, 'Ramos M.', 'Oncología');
+INSERT INTO doctor VALUES (17, 223, 'Gil N.', 'Traumatología');
+INSERT INTO doctor VALUES (17, 224, 'Saenz O.', 'Pediatría');
+INSERT INTO doctor VALUES (19, 225, 'Vazquez P.', 'Cardiología');
+INSERT INTO doctor VALUES (19, 226, 'Serrano Q.', 'Pediatría');
+INSERT INTO doctor VALUES (19, 227, 'Gallardo R.', 'Ginecología');
+INSERT INTO doctor VALUES (20, 228, 'Leon S.', 'Cardiología');
+INSERT INTO doctor VALUES (20, 229, 'Dominguez T.', 'Traumatología');
+INSERT INTO doctor VALUES (20, 230, 'Vega U.', 'Neurología');
+INSERT INTO doctor VALUES (21, 231, 'Fuentes V.', 'Cardiología');
+INSERT INTO doctor VALUES (21, 232, 'Aguilar W.', 'Pediatría');
+INSERT INTO doctor VALUES (21, 233, 'Cabrera X.', 'Ginecología');
+INSERT INTO doctor VALUES (33, 234, 'Mendoza Y.', 'Cardiología');
+INSERT INTO doctor VALUES (33, 235, 'Castillo Z.', 'Traumatología');
+INSERT INTO doctor VALUES (33, 100, 'Castellanos R.', 'Traumatología');
+INSERT INTO doctor VALUES (33, 101, 'Ortega M.', 'Cardiología');
+INSERT INTO doctor VALUES (54, 236, 'Rios A.', 'Pediatría');
+INSERT INTO doctor VALUES (54, 237, 'Paz B.', 'Ginecología');
+INSERT INTO doctor VALUES (54, 102, 'Serrano F.', 'Pediatría');
+INSERT INTO doctor VALUES (54, 103, 'Molina D.', 'Ginecología');
+INSERT INTO doctor VALUES (66, 238, 'Mora C.', 'Neurología');
+INSERT INTO doctor VALUES (66, 239, 'Soto D.', 'Traumatología');
+INSERT INTO doctor VALUES (66, 104, 'Nuñez A.', 'Neurología');
+INSERT INTO doctor VALUES (66, 105, 'Delgado P.', 'Traumatología');
+INSERT INTO doctor VALUES (77, 240, 'Rojas E.', 'Oncología');
+INSERT INTO doctor VALUES (77, 241, 'Cruz F.', 'Cardiología');
+INSERT INTO doctor VALUES (77, 106, 'Blanco S.', 'Oncología');
+INSERT INTO doctor VALUES (77, 107, 'Herrero L.', 'Cardiología');
+INSERT INTO doctor VALUES (88, 242, 'Carrasco G.', 'Psiquiatría');
+INSERT INTO doctor VALUES (88, 243, 'Hidalgo H.', 'Neurología');
+INSERT INTO doctor VALUES (88, 108, 'Calvo M.', 'Psiquiatría');
+INSERT INTO doctor VALUES (88, 109, 'Ramos J.', 'Neurología');
+INSERT INTO doctor VALUES (99, 244, 'Mendez I.', 'Urgencias');
+INSERT INTO doctor VALUES (99, 245, 'Pastor J.', 'Cardiología');
+INSERT INTO doctor VALUES (99, 246, 'Bravo K.', 'Traumatología');
+INSERT INTO doctor VALUES (99, 110, 'Peña C.', 'Urgencias');
+INSERT INTO doctor VALUES (99, 111, 'Vidal E.', 'Cardiología');
+INSERT INTO doctor VALUES (13, 247, 'Vidal L.', 'Neumología');
+INSERT INTO doctor VALUES (13, 248, 'Herrero M.', 'Cardiología');
+INSERT INTO doctor VALUES (13, 115, 'Arias V.', 'Neumología');
+INSERT INTO doctor VALUES (13, 116, 'Leon G.', 'Cardiología');
+INSERT INTO doctor VALUES (18, 249, 'Blazquez N.', 'Pediatría');
+INSERT INTO doctor VALUES (18, 250, 'Calderon O.', 'Ginecología');
+INSERT INTO doctor VALUES (18, 114, 'Cabrera F.', 'Pediatría');
+INSERT INTO doctor VALUES (22, 251, 'Arias P.', 'Oncología');
+INSERT INTO doctor VALUES (22, 252, 'Marquez Q.', 'Traumatología');
+INSERT INTO doctor VALUES (22, 113, 'Iglesias T.', 'Neurología');
+INSERT INTO doctor VALUES (45, 253, 'Pascual R.', 'Neurología');
+INSERT INTO doctor VALUES (45, 254, 'Vicente S.', 'Psiquiatría');
+INSERT INTO doctor VALUES (45, 112, 'Mendez R.', 'Traumatología');
+
+-- =====================================================
+-- 6. TABLA ENFERMO
+-- =====================================================
+DROP TABLE IF EXISTS enfermo CASCADE;
+CREATE TABLE enfermo (
+ inscripcion INTEGER NOT NULL,
+ apellido VARCHAR(15),
+ direccion VARCHAR(25),
+ fecha_nac DATE,
+ s VARCHAR(1),
+ nss BIGINT,
+ CONSTRAINT enfermo_pk PRIMARY KEY (inscripcion)
+);
+
+select * from enfermo
+
+-- DATOS ORIGINALES DE ENFERMO
+INSERT INTO enfermo VALUES (10995, 'Laguia M.', 'Lopez de Hoyos 12', '1967-06-23', 'M', 280862482);
+INSERT INTO enfermo VALUES (18004, 'Serrano V.', 'Alcala 122', '1960-05-01', 'F', 284991452);
+INSERT INTO enfermo VALUES (14024, 'Fernandez M.', 'Recoletos 50', '1967-06-23', 'F', 321790059);
+INSERT INTO enfermo VALUES (36658, 'Domin S.', 'Mayor 71', '1942-01-01', 'M', 160657471);
+INSERT INTO enfermo VALUES (38702, 'Neal R.', 'Orense 11', '1940-06-18', 'F', 380010217);
+INSERT INTO enfermo VALUES (39217, 'Cervantes M.', 'Peron 38', '1952-02-29', 'M', 440294390);
+INSERT INTO enfermo VALUES (59076, 'Miller G.', 'Lopez de Hoyos 2', '1945-09-16', 'F', 311969044);
+INSERT INTO enfermo VALUES (63827, 'Ruiz P.', 'Esquerdo 103', '1980-12-26', 'M', 100973253);
+INSERT INTO enfermo VALUES (64823, 'Fraser A.', 'Soto 3', '1980-07-10', 'F',285201776);
+INSERT INTO enfermo VALUES (74835, 'Benitez E.', 'Argentina 50', '1957-10-05', 'M', 154811767);
+
+-- NUEVOS PACIENTES
+INSERT INTO enfermo VALUES (11001, 'Sanz T.', 'Gran Via 45', '1975-03-15', 'M', 301234567);
+INSERT INTO enfermo VALUES (11002, 'Gil R.', 'Castellana 89', '1982-11-22', 'F', 312345678);
+INSERT INTO enfermo VALUES (11003, 'Romero C.', 'Alcala 120', '1969-07-03', 'M', 323456789);
+INSERT INTO enfermo VALUES (11004, 'Marquez L.', 'Serrano 77', '1978-09-11', 'F', 334567890);
+INSERT INTO enfermo VALUES (11005, 'Flores J.', 'Velazquez 34', '1985-02-28', 'M', 345678901);
+INSERT INTO enfermo VALUES (11006, 'Vargas C.', 'Goya 66', '1973-04-09', 'F', 356789012);
+INSERT INTO enfermo VALUES (11007, 'Castro E.', 'Orense 45', '1988-05-17', 'M', 367890123);
+INSERT INTO enfermo VALUES (11008, 'Mendez P.', 'Castilla 23', '1970-06-30', 'F', 378901234);
+INSERT INTO enfermo VALUES (11009, 'Paredes A.', 'Bailen 12', '1965-07-14', 'M', 389012345);
+INSERT INTO enfermo VALUES (11010, 'Herrera B.', 'Toledo 98', '1979-08-25', 'F', 390123456);
+INSERT INTO enfermo VALUES (11011, 'Cabrera L.', 'Segovia 45', '1983-09-19', 'M', 401234567);
+INSERT INTO enfermo VALUES (11012, 'Fuentes S.', 'Avila 21', '1976-10-05', 'F', 412345678);
+INSERT INTO enfermo VALUES (11013, 'Molina D.', 'Cuenca 34', '1981-11-12', 'M', 423456789);
+INSERT INTO enfermo VALUES (11014, 'Ortega R.', 'Guadalajara 56', '1974-12-29', 'F', 434567890);
+INSERT INTO enfermo VALUES (11015, 'Ramos T.', 'Caceres 78', '1986-01-08', 'M', 445678901);
+
+-- PACIENTES ADICIONALES (inscripciones 11016-11105)
+INSERT INTO enfermo VALUES (11016, 'Martinez A.', 'Gran Via 123', '1982-03-15', 'M', 456789012);
+INSERT INTO enfermo VALUES (11017, 'Fernandez B.', 'Diagonal 456', '1995-06-22', 'F', 467890123);
+INSERT INTO enfermo VALUES (11018, 'Rodriguez C.', 'Rambla 78', '1978-12-03', 'M', 478901234);
+INSERT INTO enfermo VALUES (11019, 'Sanchez D.', 'Paseo de Gracia 90', '1988-04-11', 'F', 489012345);
+INSERT INTO enfermo VALUES (11020, 'Perez E.', 'Avda. America 23', '1975-08-28', 'M', 490123456);
+INSERT INTO enfermo VALUES (11021, 'Gomez F.', 'Calle Mayor 45', '1992-02-09', 'F', 501234567);
+INSERT INTO enfermo VALUES (11022, 'Diaz G.', 'Plaza España 12', '1983-10-17', 'M', 512345678);
+INSERT INTO enfermo VALUES (11023, 'Lopez H.', 'Avda. Libertad 67', '1970-05-30', 'F', 523456789);
+INSERT INTO enfermo VALUES (11024, 'Hernandez I.', 'Calle Real 89', '1998-01-14', 'M', 534567890);
+INSERT INTO enfermo VALUES (11025, 'Torres J.', 'Paseo Maritimo 34', '1986-07-25', 'F', 545678901);
+INSERT INTO enfermo VALUES (11026, 'Ruiz K.', 'Avda. Mediterraneo 56', '1973-11-19', 'M', 556789012);
+INSERT INTO enfermo VALUES (11027, 'Alvarez L.', 'Calle Sol 21', '1981-09-05', 'F', 567890123);
+INSERT INTO enfermo VALUES (11028, 'Romero M.', 'Plaza Mayor 34', '1990-03-12', 'M', 578901234);
+INSERT INTO enfermo VALUES (11029, 'Molina N.', 'Calle Luna 56', '1976-12-29', 'F', 589012345);
+INSERT INTO enfermo VALUES (11030, 'Suarez O.', 'Avda. Paz 78', '1984-04-08', 'M', 590123456);
+INSERT INTO enfermo VALUES (11031, 'Ortega P.', 'Calle Estrella 90', '1969-01-21', 'F', 601234567);
+INSERT INTO enfermo VALUES (11032, 'Blanco Q.', 'Plaza Sol 12', '1993-06-16', 'M', 612345678);
+INSERT INTO enfermo VALUES (11033, 'Castro R.', 'Calle Rio 34', '1980-10-04', 'F', 623456789);
+INSERT INTO enfermo VALUES (11034, 'Nuñez S.', 'Avda. Mar 56', '1974-02-23', 'M', 634567890);
+INSERT INTO enfermo VALUES (11035, 'Iglesias T.', 'Calle Campo 78', '1989-05-10', 'F', 645678901);
+INSERT INTO enfermo VALUES (11036, 'Jimeno U.', 'Plaza Iglesia 90', '1977-08-27', 'M', 656789012);
+INSERT INTO enfermo VALUES (11037, 'Calvo V.', 'Calle Norte 12', '1985-03-14', 'F', 667890123);
+INSERT INTO enfermo VALUES (11038, 'Ramos W.', 'Avda. Sur 34', '1991-07-19','M', 678901234);
+INSERT INTO enfermo VALUES (11039, 'Gil X.', 'Calle Este 56', '1968-12-01', 'F', 689012345);
+INSERT INTO enfermo VALUES (11040, 'Saenz Y.', 'Plaza Oeste 78', '1979-10-06', 'M', 690123456);
+INSERT INTO enfermo VALUES (11041, 'Vazquez Z.', 'Calle Central 90', '1996-04-13', 'F', 701234567);
+INSERT INTO enfermo VALUES (11042, 'Serrano A.', 'Avda. Principal 12', '1972-09-24', 'M', 712345678);
+INSERT INTO enfermo VALUES (11043, 'Gallardo B.', 'Calle Secundaria 34', '1987-06-07', 'F', 723456789);
+INSERT INTO enfermo VALUES (11044, 'Leon C.', 'Plaza Nueva 56', '1994-01-31', 'M', 734567890);
+INSERT INTO enfermo VALUES (11045, 'Dominguez D.', 'Calle Vieja 78', '1983-05-18', 'F', 745678901);
+INSERT INTO enfermo VALUES (11046, 'Vega E.', 'Avda. Joven 90', '1971-08-22', 'M', 756789012);
+INSERT INTO enfermo VALUES (11047, 'Fuentes F.', 'Calle Larga 12', '1986-02-03', 'F', 767890123);
+INSERT INTO enfermo VALUES (11048, 'Aguilar G.', 'Plaza Pequeña 34', '1999-07-26', 'M', 778901234);
+INSERT INTO enfermo VALUES (11049, 'Cabrera H.', 'Calle Corta 56', '1975-04-09', 'F', 789012345);
+INSERT INTO enfermo VALUES (11050, 'Mendoza I.', 'Avda. Ancha 78', '1982-12-15', 'M', 790123456);
+INSERT INTO enfermo VALUES (11051, 'Castillo J.', 'Calle Estrecha 90', '1970-09-28', 'F', 801234567);
+INSERT INTO enfermo VALUES (11052, 'Rios K.', 'Plaza Redonda 12', '1988-01-11', 'M', 812345678);
+INSERT INTO enfermo VALUES (11053, 'Paz L.', 'Calle Verde 34', '1997-03-17', 'F', 823456789);
+INSERT INTO enfermo VALUES (11054, 'Mora M.', 'Avda. Azul 56', '1967-10-30', 'M', 834567890);
+INSERT INTO enfermo VALUES (11055, 'Soto N.', 'Calle Roja 78', '1974-06-05', 'F', 845678901);
+INSERT INTO enfermo VALUES (11056, 'Rojas O.', 'Plaza Blanca 90', '1981-02-19', 'M', 856789012);
+INSERT INTO enfermo VALUES (11057, 'Cruz P.', 'Calle Negra 12', '1995-07-24', 'F', 867890123);
+INSERT INTO enfermo VALUES (11058, 'Carrasco Q.', 'Avda. Gris 34', '1973-11-07', 'M', 878901234);
+INSERT INTO enfermo VALUES (11059, 'Hidalgo R.', 'Calle Marron 56', '1989-08-16', 'F', 889012345);
+INSERT INTO enfermo VALUES (11060, 'Mendez S.', 'Plaza Dorada 78', '1978-05-02', 'M', 890123456);
+
+INSERT INTO enfermo VALUES (11061, 'Pastor T.', 'Calle Plateada 90', '1984-01-27', 'F', 901234567);
+INSERT INTO enfermo VALUES (11062, 'Bravo U.', 'Avda. Bronce 12', '1992-03-13', 'M', 912345678);
+INSERT INTO enfermo VALUES (11063, 'Vidal V.', 'Calle Oro 34', '1970-09-29', 'F', 923456789);
+INSERT INTO enfermo VALUES (11064, 'Herrero W.', 'Plaza Plata 56', '1986-12-10', 'M', 934567890);
+INSERT INTO enfermo VALUES (11065, 'Blazquez X.', 'Calle Cobre 78', '1977-04-22', 'F', 945678901);
+INSERT INTO enfermo VALUES (11066, 'Calderon Y.', 'Avda. Niquel 90', '1966-07-04', 'M', 956789012);
+INSERT INTO enfermo VALUES (11067, 'Arias Z.', 'Calle Aluminio 12', '1983-10-11', 'F', 967890123);
+INSERT INTO enfermo VALUES (11068, 'Marquez A.', 'Plaza Zinc 34', '1971-02-18', 'M', 978901234);
+INSERT INTO enfermo VALUES (11069, 'Pascual B.', 'Calle Titanio 56', '1998-06-25', 'F', 989012345);
+INSERT INTO enfermo VALUES (11070, 'Vicente C.', 'Avda. Magnesio 78', '1980-09-03', 'M', 990123456);
+INSERT INTO enfermo VALUES (11071, 'Ballesteros D.', 'Calle Azufre 90', '1974-11-14', 'F', 911234567);
+INSERT INTO enfermo VALUES (11072, 'Ferrer E.', 'Plaza Calcio 12', '1987-01-30', 'M', 922345678);
+INSERT INTO enfermo VALUES (11073, 'Lorenzo F.', 'Calle Sodio 34', '1969-05-07', 'F', 933456789);
+INSERT INTO enfermo VALUES (11074, 'Luque G.', 'Avda. Potasio 56', '1994-08-21', 'M', 944567890);
+INSERT INTO enfermo VALUES (11075, 'Gallego H.', 'Calle Litio 78', '1976-04-02', 'F', 955678901);
+INSERT INTO enfermo VALUES (11076, 'Barrios I.', 'Plaza Berilio 90', '1982-12-23', 'M', 966789012);
+INSERT INTO enfermo VALUES (11077, 'Lara J.', 'Crea Boro 12', '1991-02-12', 'F', 977890123);
+INSERT INTO enfermo VALUES (11078, 'Ortiz K.', 'Avda. Carbono 34', '1978-07-19', 'M', 988901234);
+INSERT INTO enfermo VALUES (11079, 'Plaza L.', 'Calle Nitrogeno 56', '1985-05-28', 'F', 999012345);
+INSERT INTO enfermo VALUES (11080, 'Santos M.', 'Plaza Oxigeno 78', '1972-03-09', 'M', 900123456);
+INSERT INTO enfermo VALUES (11081, 'Cano N.', 'Calle Fluor 90', '1988-11-15','F', 911234568);
+
+INSERT INTO enfermo VALUES (11082, 'Duran O.', 'Avda. Neon 12', '1996-08-31', 'M', 922345679);
+INSERT INTO enfermo VALUES (11083, 'Montero P.', 'Calle Helio 34', '1975-10-06', 'F', 933456790);
+INSERT INTO enfermo VALUES (11084, 'Navarro Q.', 'Plaza Argon 56', '1983-04-24', 'M', 944567801);
+INSERT INTO enfermo VALUES (11085, 'Rey R.', 'Calle Kripton 78', '1990-01-17', 'F', 955678912);
+INSERT INTO enfermo VALUES (11086, 'Segura S.', 'Avda. Xenon 90', '1968-06-02', 'M', 966789023);
+INSERT INTO enfermo VALUES (11087, 'Cebrian T.', 'Calle Radon 12', '1979-12-11', 'F', 977890134);
+INSERT INTO enfermo VALUES (11088, 'Quiros U.', 'Placa Uranio 34', '1993-02-28', 'M', 988901245);
+INSERT INTO enfermo VALUES (11089, 'Nieto V.', 'Calle Plutonio 56', '1987-07-14', 'F', 999012356);
+INSERT INTO enfermo VALUES (11090, 'Pacheco W.', 'Avda. Titanio 78', '1971-05-20', 'M', 900123467);
+INSERT INTO enfermo VALUES (11091, 'Manzano X.', 'Calle Aluminio 90', '1984-03-03', 'F', 911234578);
+INSERT INTO enfermo VALUES (11092, 'Aguilera Y.', 'Plaza Hierro 12', '1977-08-26', 'M', 922345689);
+INSERT INTO enfermo VALUES (11093, 'Castellanos Z.', 'Calle Cobre 34', '1999-11-09', 'F', 933456790);
+INSERT INTO enfermo VALUES (11094, 'Varela A.', 'Avda. Zinc 56', '1980-01-18', 'M', 944567801);
+INSERT INTO enfermo VALUES (11095, 'Perales B.', 'Calle Bronce 78', '1974-04-05', 'F', 955678912);
+INSERT INTO enfermo VALUES (11096, 'Maestre C.', 'Plaza Plata 90', '1986-10-22', 'M', 966789023);
+INSERT INTO enfermo VALUES (11097, 'Belmonte D.', 'Calle Oro 12', '1995-06-30', 'F', 977890134);
+INSERT INTO enfermo VALUES (11098, 'Berrocal E.', 'Avda. Diamante 34', '1967-05-14', 'M', 988901245);
+INSERT INTO enfermo VALUES (11099, 'Villena F.', 'Calle Rubi 56', '1989-09-07', 'F', 999012356);
+INSERT INTO enfermo VALUES (11100, 'Cebrian G.', 'Plaza Esmeralda 78', '1973-12-23', 'M', 900123467);
+INSERT INTO enfermo VALUES (11101, 'Maldonado H.', 'Calle Zafiro 90', '1982-02-03', 'F', 911234578);
+INSERT INTO enfermo VALUES (11102, 'Palacios I.', 'Avda. Topacio 12', '1998-07-19', 'M', 922345689);
+--QUEDE EN LA PAGINA 25
+INSERT INTO enfermo VALUES (11103, 'Olmedo J.', 'Cala Ambar 34', '1976-11-11', 'F', 933456790);
+INSERT INTO enfermo VALUES (11104, 'Almagro K.', 'Plaza Jade 56', '1985-03-27', 'M', 944567801);
+INSERT INTO enfermo VALUES (11105, 'Carretero L.', 'Cala Onix 78', '1970-08-02', 'F', 955678912);
+
+-- =====================================================
+-- 7. TABLA EMP
+-- =====================================================
+DROP TABLE IF EXISTS emp CASCADE;
+CREATE TABLE emp (
+ emp_no INTEGER NOT NULL,
+ apellido VARCHAR(10),
+ oficio VARCHAR(10),
+ dir INTEGER,
+ fecha_alt DATE,
+ salario NUMERIC(10),
+ comision NUMERIC(10),
+ dept_no INTEGER NOT NULL,
+ CONSTRAINT emp_pk PRIMARY KEY (emp_no)
+);
+
+select * from emp
+
+-- DATOS ORIGINALES DE EMP
+INSERT INTO emp VALUES (7902, 'SANCHEZ', 'EMPLEADO', 7902, '1980-12-17', 104000, NULL, 20);
+INSERT INTO emp VALUES (7499, 'ARROYO', 'VENDEDOR', 7698, '1981-02-20', 208000, 39000, 30);
+INSERT INTO emp VALUES (7521, 'SALA', 'VENDEDOR', 7698, '1981-02-22', 162500,65000, 30);
+INSERT INTO emp VALUES (7566, 'JIMENEZ', 'DIRECTOR', 7839, '1981-04-02', 386750, NULL, 20);
+INSERT INTO emp VALUES (7654, 'MARTIN', 'VENDEDOR', 7698, '1981-09-28', 162500, 182000, 30);
+INSERT INTO emp VALUES (7698, 'NEGRO', 'DIRECTOR', 7839, '1981-05-01', 370500, NULL, 30);
+INSERT INTO emp VALUES (7782, 'CEREZO', 'DIRECTOR', 7839, '1981-06-09', 318500, NULL, 10);
+INSERT INTO emp VALUES (7788, 'GIL', 'ANALISTA', 7566, '1982-12-09', 390000, NULL, 20);
+INSERT INTO emp VALUES (7839, 'REY', 'PRESIDENTE', NULL, '1981-11-17', 650000, NULL, 10);
+INSERT INTO emp VALUES (7844, 'TOVAR', 'VENDEDOR', 7698, '1981-09-08', 195000, 0, 30);
+INSERT INTO emp VALUES (7876, 'ALONSO', 'EMPLEADO', 7788, '1983-01-12', 143000, NULL, 20);
+INSERT INTO emp VALUES (7900, 'JIMENO', 'EMPLEADO', 7698, '1981-12-03', 123500, NULL, 30);
+INSERT INTO emp VALUES (7912, 'FERNANDEZ', 'ANALISTA', 7566, '1981-12-03', 390000, NULL, 20);
+INSERT INTO emp VALUES (7934, 'MUÑOZ', 'EMPLEADO', 7782, '1982-01-23', 169000, NULL, 10);
+
+-- NUEVOS EMPLEADOS
+INSERT INTO emp VALUES (8001, 'PEREZ', 'EMPLEADO', 7782, '1983-03-15', 148000, NULL, 10);
+INSERT INTO emp VALUES (8002, 'GOMEZ', 'VENDEDOR', 7698, '1984-04-22', 175000, 25000, 30);
+INSERT INTO emp VALUES (8003, 'DIAZ', 'ANALISTA', 7566, '1983-06-10', 375000, NULL, 20);
+INSERT INTO emp VALUES (8004, 'RUIZ', 'EMPLEADO', 7902, '1984-07-05', 135000, NULL, 20);
+INSERT INTO emp VALUES (8005, 'TORRES', 'DIRECTOR', 7839, '1983-08-19', 345000, NULL, 30);
+INSERT INTO emp VALUES (8006, 'CASTRO', 'EMPLEADO', 7782, '1984-03-10', 155000, NULL, 10);
+INSERT INTO emp VALUES (8007, 'ORTEGA', 'VENDEDOR', 7698, '1985-06-18', 185000, 32000, 30);
+INSERT INTO emp VALUES (8008, 'RAMIREZ', 'ANALISTA', 7566, '1983-09-22', 395000, NULL, 20);
+INSERT INTO emp VALUES (8009, 'MORALES', 'EMPLEADO', 7902, '1986-02-05', 128000, NULL, 20);
+INSERT INTO emp VALUES (8010, 'CASTILLO', 'VENDEDOR', 7698, '1984-11-30', 168000, 45000, 30);
+INSERT INTO emp VALUES (8011, 'REYES', 'DIRECTOR', 7839, '1983-05-12', 365000, NULL, 30);
+INSERT INTO emp VALUES (8012, 'MENDOZA', 'EMPLEADO', 7788, '1985-10-27', 142000, NULL, 20);
+INSERT INTO emp VALUES (8013, 'AGUILAR', 'ANALISTA', 7566, '1984-01-14', 385000, NULL, 20);
+INSERT INTO emp VALUES (8014, 'GUZMAN', 'VENDEDOR', 8011, '1986-04-09', 175000, 28000, 30);
+INSERT INTO emp VALUES (8015, 'SANTANA', 'EMPLEADO', 7782, '1985-07-03', 148000, NULL, 10);
+INSERT INTO emp VALUES (8016, 'HERRERA', 'DIRECTOR', 7839, '1982-12-20', 410000, NULL, 20);
+INSERT INTO emp VALUES (8017, 'PACHECO', 'EMPLEADO', 8016, '1986-08-16', 132000, NULL, 20);
+INSERT INTO emp VALUES (8018, 'VILLAR', 'VENDEDOR', 8011, '1985-05-25', 172000, 35000, 30);
+INSERT INTO emp VALUES (8019, 'BATISTA', 'ANALISTA', 8016, '1984-11-07', 392000, NULL, 20);
+INSERT INTO emp VALUES (8020, 'FERRER', 'EMPLEADO', 7782, '1987-02-13', 125000, NULL, 10);
+INSERT INTO emp VALUES (8021, 'LORENZO', 'VENDEDOR', 7698, '1983-09-29', 195000, 50000, 30);
+INSERT INTO emp VALUES (8022, 'SERRANO', 'EMPLEADO', 8016, '1986-01-04', 138000, NULL, 20);
+INSERT INTO emp VALUES (8023, 'MARQUEZ', 'DIRECTOR', 7839, '1984-03-17', 352000, NULL, 10);
+INSERT INTO emp VALUES (8024, 'JIMENO', 'EMPLEADO', 8023, '1986-06-21', 145000, NULL, 10);
+INSERT INTO emp VALUES (8025, 'PASTOR', 'VENDEDOR', 8011, '1985-10-08', 182000, 42000, 30);
+INSERT INTO emp VALUES (8026, 'BENITEZ', 'ANALISTA', 7566, '1985-04-15', 388000, NULL, 20);
+INSERT INTO emp VALUES (8027, 'ALVAREZ', 'EMPLEADO', 8023, '1986-12-01', 122000, NULL, 10);
+INSERT INTO emp VALUES (8028, 'ROMERO', 'VENDEDOR', 7698, '1984-07-19', 178000, 38000, 30);
+INSERT INTO emp VALUES (8029, 'NAVARRO', 'DIRECTOR', 7839, '1983-10-23', 395000, NULL, 20);
+INSERT INTO emp VALUES (8030, 'NUÑEZ', 'EMPLEADO', 8029, '1987-05-11', 135000, NULL, 20);
+INSERT INTO emp VALUES (8031, 'MOLINA', 'VENDEDOR', 8011, '1985-02-28', 188000, 48000, 30);
+
+-- =====================================================
+-- 8. TABLA DEPT2
+-- =====================================================
+DROP TABLE IF EXISTS dept2 CASCADE;
+CREATE TABLE dept2 (
+ dept_no INTEGER NOT NULL,
+ dnombre VARCHAR(20),
+ loc VARCHAR(14),
+ CONSTRAINT dept2_pk PRIMARY KEY (dept_no)
+);
+
+select * from dept2
+
+-- DATOS ORIGINALES DE DEPT2
+INSERT INTO dept2 VALUES (10, 'CONTABILIDAD', 'MADRID');
+INSERT INTO dept2 VALUES (20, 'INVESTIGACION', 'BILBAO');
+INSERT INTO dept2 VALUES (30, 'VENTAS', 'SEVILLA');
+INSERT INTO dept2 VALUES (40, 'OPERACIONES', 'MALAGA');
+
+-- NUEVOS DEPARTAMENTOS
+INSERT INTO dept2 VALUES (50, 'MARKETING', 'BARCELONA');
+INSERT INTO dept2 VALUES (60, 'RECURSOS HUMANOS', 'VALENCIA');
+INSERT INTO dept2 VALUES (70, 'COMPRAS', 'ZARAGOZA');
+INSERT INTO dept2 VALUES (80, 'LOGISTICA', 'BILBAO');
+INSERT INTO dept2 VALUES (90, 'CALIDAD', 'MADRID');
+INSERT INTO dept2 VALUES (95, 'PRODUCCION', 'SEVILLA');
+INSERT INTO dept2 VALUES (96, 'ALMACEN', 'MALAGA');
+INSERT INTO dept2 VALUES (97, 'SERVICIOS', 'BARCELONA');
+INSERT INTO dept2 VALUES (98, 'CONSULTORIA', 'MADRID');
+INSERT INTO dept2 VALUES (99, 'DIRECCION', 'MADRID');
+
+-- =====================================================
+-- CONFIRMACION DE DATOS CARGADOS
+-- =====================================================
+SELECT 'HOSPITAL' AS tabla, COUNT(*) AS registros FROM hospital
+UNION ALL SELECT 'SALA', COUNT(*) FROM sala
+UNION ALL SELECT 'PLANTILLA', COUNT(*) FROM plantilla
+UNION ALL SELECT 'OCUPACION', COUNT(*) FROM ocupacion
+UNION ALL SELECT 'DOCTOR', COUNT(*) FROM doctor
+UNION ALL SELECT 'ENFERMO', COUNT(*) FROM enfermo
+UNION ALL SELECT 'EMP', COUNT(*) FROM emp
+UNION ALL SELECT 'DEPT2', COUNT(*) FROM dept2;
+
+-- =====================================================
+-- COMMIT FINAL
+-- =====================================================
+COMMIT;
+
+--TAREA
+
+--1. Miembros del personal cuyo nombre empiece por 'H' 
+SELECT apellido FROM plantilla WHERE UPPER(apellido) LIKE 'H%'; 
+
+--2. Enfermeras y enfermeros en turnos de Tarde o Mañana 
+SELECT apellido  
+FROM plantilla  
+WHERE UPPER(funcion) IN ('ENFERMERO', 'ENFERMERA')  
+  AND UPPER(turno) IN ('T', 'M'); 
+  
+--3. Enfermeras que ganan entre 2.000.000 y 2.500.000 
+SELECT apellido, salario  
+FROM plantilla  
+WHERE salario BETWEEN 2000000 AND 2500000  
+  AND UPPER(funcion) = 'ENFERMERA'; 
+  
+--4. Abreviatura de tres letras de hospitales 
+SELECT SUBSTRING(nombre FROM 1 FOR 3) AS abr, hospital_cod, nombre  
+FROM hospital  
+ORDER BY 1; 
+
+--5. Asignar códigos a especialidades (CASE en Postgre) 
+SELECT apellido, especialidad, 
+       CASE especialidad 
+           WHEN 'Cardiología' THEN 1 
+           WHEN 'Psiquiatría' THEN 2 
+           WHEN 'Pediatría' THEN 3 
+           ELSE 4 
+       END AS codigo 
+FROM doctor; 
+
+--6. Posición de la primera letra 'A' en el apellido 
+SELECT apellido, POSITION('A' IN apellido) AS "PRIMERA LETRA A"  
+FROM enfermo; 
+
+--7. Formatear información de departamentos 
+SELECT 'El departamento de ' || dnombre || ' está en ' || loc AS comentario  FROM dept2; 
+
+--8. Reemplazar primera 'N' del apellido por 'nnn' 
+SELECT OVERLAY(apellido PLACING 'nnn' FROM POSITION('N' IN apellido) FOR 1) AS "TRES N" 
+--Overlay reemplaza una parte del texto original solo para visualizar
+FROM emp  
+WHERE UPPER(apellido) LIKE '%N%'  
+ORDER BY apellido; 
+
+--9. Salario total y dígitos que lo componen
+SELECT apellido,
+ salario + COALESCE(comision, 0) AS sal_total,
+ SUBSTRING(CAST(salario + COALESCE(comision, 0) AS VARCHAR), 1, 1) AS c,
+ SUBSTRING(CAST(salario + COALESCE(comision, 0) AS VARCHAR), 2, 1) AS d,
+ SUBSTRING(CAST(salario + COALESCE(comision, 0) AS VARCHAR), 3, 1) AS m,
+ SUBSTRING(CAST(salario + COALESCE(comision, 0) AS VARCHAR), 4, 1) AS c,
+ SUBSTRING(CAST(salario + COALESCE(comision, 0) AS VARCHAR), 5, 1) AS d,
+ SUBSTRING(CAST(salario + COALESCE(comision, 0) AS VARCHAR), 6, 1) AS u
+FROM emp
+ORDER BY 2 DESC, 1;
+
+--10. Salario total con comisión o 15% del salario
+SELECT apellido,oficio,salario + COALESCE(comision, salario * 0.15) AS salario_total
+FROM emp
+WHERE comision IS NULL OR comision > salario * 0.15
+ORDER BY oficio, 3 DESC;
+
+--11. Salario mensual de enfermeras y enfermeros
+SELECT apellido, TRUNC(salario / 12) AS "SALARIO MENSUAL"
+FROM plantilla
+WHERE UPPER(funcion) IN ('ENFERMERA', 'ENFERMERO');
+
+--12. Fecha de hace tres semanas
+SELECT CURRENT_DATE - 21 AS fecha;
+
+--13. Personal del departamento 20 con salario > 150,000 mensuales
+SELECT apellido, oficio,
+ TO_CHAR(fecha_alt, 'day month dd " de " yyyy hh24:mi') AS alta
+FROM emp
+WHERE dept_no = 20 AND salario > 150000;
+
+--14. Empleados dados de alta entre martes y jueves
+SELECT emp_no, oficio, TO_CHAR(fecha_alt, 'day') AS dia
+FROM emp
+WHERE EXTRACT(DOW FROM fecha_alt) BETWEEN 2 AND 4; -- Lunes=1, Martes=2, Miércoles=3, Jueves=4
+
+--15. Días de alta formateados en español
+SELECT apellido, oficio,
+ CASE EXTRACT(DOW FROM fecha_alt)
+ WHEN 1 THEN 'Lunes'
+ WHEN 2 THEN 'Martes'
+ WHEN 3 THEN 'Miércoles'
+ WHEN 4 THEN 'Jueves'
+ WHEN 5 THEN 'Viernes'
+ ELSE 'Fin de semana'
+ END AS dia
+FROM emp
+ORDER BY 3;
+
+--16. Salario medio de los Analistas
+SELECT round(AVG(salario), 2) AS "SALARIO MEDIO" FROM emp WHERE UPPER(oficio) = 'ANALISTA';
+
+--17. Salario más alto, más bajo y su diferencia
+SELECT MAX(salario) AS maximo,
+ MIN(salario) AS minimo,
+ MAX(salario) - MIN(salario) AS diferencia
+FROM emp;
+
+--18. Número de oficios diferentes en departamentos 10 y 20
+SELECT COUNT(DISTINCT oficio) AS tareas
+FROM emp
+WHERE dept_no IN (10, 20);
+
+--19. Número de personas por oficio y departamento
+SELECT dept_no, oficio, COUNT(*)
+FROM emp
+GROUP BY dept_no, oficio;
+
+--20. Departamentos con más de 4 personas
+SELECT dept_no, COUNT(*) AS personal
+FROM emp
+GROUP BY dept_no
+HAVING COUNT(*) > 4;
+
+--21. Departamentos con más de 2 personas en la misma profesión
+SELECT dept_no, oficio, COUNT(*) AS personal
+FROM emp
+GROUP BY dept_no, oficio
+HAVING COUNT(*) > 2;
+
+--22. Número de empleados por departamento con oficio'EMPLEADO'
+SELECT dept_no, COUNT(*)
+FROM emp
+WHERE UPPER(oficio) = 'EMPLEADO'
+GROUP BY dept_no;
+
+--23. Salario total medio anual de los vendedores
+SELECT oficio, AVG(salario + COALESCE(comision, 0)) AS "SALARIO MEDIO ANUAL"
+FROM emp
+WHERE UPPER(oficio) = 'VENDEDOR'
+GROUP BY oficio;
+
+--24. Salario total medio anual de empleados y vendedores
+SELECT oficio, round(AVG(salario + COALESCE(comision, 0)),2) AS "SALARIO MEDIO ANUAL"
+FROM emp
+WHERE UPPER(oficio) IN ('VENDEDOR', 'EMPLEADO')
+GROUP BY oficio;
+
+--25. Por departamento y oficio, máximo y suma salarial
+SELECT dept_no, oficio, SUM(salario) AS suma, MAX(salario) AS maximo
+FROM emp
+WHERE (comision IS NULL) OR (comision < 0.25 * salario)
+GROUP BY dept_no, oficio
+HAVING SUM(salario) >= 0.5 * MAX(salario);
+
+--26. Por año y oficio (solo días laborables)
+SELECT EXTRACT(YEAR FROM fecha_alt) AS alta,oficio,COUNT(*) AS "N1 EMPL", round(AVG(salario),2) AS "MEDIA SALARIAL"
+FROM emp
+WHERE EXTRACT(DOW FROM fecha_alt) NOT IN (0, 6) -- Postgre: 0=Domingo, 6=Sábado
+GROUP BY EXTRACT(YEAR FROM fecha_alt), oficio
+HAVING COUNT(*) > 1
+ORDER BY 1, 4 DESC;
+
+--27. Máximo salario por inicial consonante
+SELECT SUBSTRING(apellido FROM 1 FOR 1) AS inicial, MAX(salario) AS maximo
+FROM emp
+WHERE POSITION('N' IN apellido) = 0 OR POSITION('N' IN SUBSTRING(apellido FROM POSITION('N' IN apellido) + 1))= 0
+GROUP BY SUBSTRING(apellido FROM 1 FOR 1)
+HAVING SUBSTRING(apellido FROM 1 FOR 1) NOT IN ('A','E','I','O','U')
+ORDER BY 1;
+
+--28. Matriz de salarios por oficio y departamento
+SELECT oficio,
+ SUM(CASE WHEN dept_no = 10 THEN salario ELSE 0 END) AS dep10,
+ SUM(CASE WHEN dept_no = 20 THEN salario ELSE 0 END) AS dep20,
+ SUM(CASE WHEN dept_no = 30 THEN salario ELSE 0 END) AS dep30,
+ SUM(CASE WHEN dept_no = 40 THEN salario ELSE 0 END) AS dep40,
+ SUM(salario) AS total
+FROM emp
+GROUP BY oficio
+ORDER BY 6 DESC;
+
+--29. Suma de comisiones asignando porcentaje pordepartamento
+SELECT dept_no, oficio,
+ SUM(COALESCE(comision,
+ CASE dept_no
+ WHEN 10 THEN 0.1 * salario
+ WHEN 20 THEN 0.15 * salario
+ WHEN 30 THEN 0.17 * salario
+ ELSE 0.05 * salario
+ END)) AS "SUMA DE COMISIONES"
+FROM emp
+WHERE EXTRACT(YEAR FROM fecha_alt) <= 1981
+ AND UPPER(oficio) != 'PRESIDENTE'
+GROUP BY dept_no, oficio;
+
+--30. Máximo, mínimo y media por departamento (formatovertical)
+SELECT 'Maximo---' AS comentario, MAX(salario) AS valor, dept_no
+FROM emp GROUP BY dept_no
+UNION
+SELECT 'Media---' AS comentario, AVG(salario) AS valor, dept_no
+FROM emp GROUP BY dept_no
+UNION
+SELECT 'Minimo---' AS comentario, MIN(salario) AS valor, dept_no
+FROM emp GROUP BY dept_no
+ORDER BY 3;
+
+--31. Empleados con nombre de departamento
+SELECT apellido, oficio, e.dept_no, dnombre
+FROM emp e, dept2 d
+WHERE e.dept_no = d.dept_no;
+
+--32. Analistas y localidad donde trabajan
+SELECT apellido, oficio, loc
+FROM emp e, dept2 d
+WHERE e.dept_no = d.dept_no
+ AND UPPER(oficio) = 'ANALISTA';
+
+--33. Empleados que trabajan en Madrid
+SELECT apellido, oficio
+FROM emp e, dept2 d
+WHERE UPPER(loc) = 'MADRID'
+ AND e.dept_no = d.dept_no
+ORDER BY oficio;
+
+--34. Número de empleados por departamento
+SELECT e.dept_no AS num_dep, dnombre AS departamento, COUNT(*) AS n1_empl
+FROM emp e, dept2 d
+WHERE e.dept_no = d.dept_no
+GROUP BY e.dept_no, dnombre
+ORDER BY 3 DESC;
+
+--35. Estadísticas para VENTAS y CONTABILIDAD
+SELECT dnombre,
+ MAX(salario) AS maximo,
+ MIN(salario) AS minimo,
+ AVG(salario) AS media,
+ COUNT(*) AS n_empl
+FROM emp e, dept2 d
+WHERE UPPER(dnombre) IN ('VENTAS', 'CONTABILIDAD')
+ AND e.dept_no = d.dept_no
+GROUP BY dnombre
+ORDER BY dnombre;
+
+--36. Máximo salario por sala y hospital
+SELECT h.nombre AS hospital, s.nombre AS sala, MAX(p.salario) AS maximo
+FROM sala s, plantilla p, hospital h
+WHERE h.hospital_cod = p.hospital_cod
+ AND p.hospital_cod = s.hospital_cod
+ AND p.sala_cod = s.sala_cod
+GROUP BY h.nombre, s.nombre;
+
+--37. Empleados con su jefe directo
+SELECT e.emp_no AS empleado, e.apellido AS nombre, e.oficio, e.dir AS jefe, e2.apellido AS nombre_jefe, e2.oficio AS oficio_jefe
+FROM emp e, emp e2
+WHERE e.dir = e2.emp_no
+ORDER BY 2;
+
+--38. Mínimo salario por departamento, excluyendo'EMPLEADO'
+SELECT dnombre AS departamento, COALESCE(MIN(salario), 0) AS minimo
+FROM emp e, dept2 d
+WHERE e.dept_no = d.dept_no
+ AND (UPPER(oficio) != 'EMPLEADO' OR oficio IS NULL)
+GROUP BY dnombre
+ORDER BY 2 DESC;
+
+--39. Empleados con jefe (incluyendo al director general)
+SELECT e.emp_no AS empleado, e.apellido AS nombre, e.oficio, e.dir AS jefe, e2.apellido AS nombre_jefe, e2.oficio AS oficio_jefe
+FROM emp e
+LEFT JOIN emp e2 ON e.dir = e2.emp_no
+ORDER BY 2;
+
+--40. Outer join para mostrar jefes sin subordinados
+SELECT e.emp_no AS empleado, e.apellido AS nombre, e.oficio, e.dir AS jefe, e2.apellido AS nombre_jefe, e2.oficio AS oficio_jefe
+FROM emp e
+RIGHT JOIN emp e2 ON e.dir = e2.emp_no
+ORDER BY 2;
+
+--41. Combinación de los dos anteriores
+SELECT e.emp_no AS empleado, e.apellido AS nombre, e.oficio, e.dir AS jefe, e2.apellido AS nombre_jefe, e2.oficio AS oficio_jefe
+FROM emp e
+LEFT JOIN emp e2 ON e.dir = e2.emp_no
+UNION
+SELECT e.emp_no AS empleado, e.apellido AS nombre, e.oficio, e.dir AS jefe, e2.apellido AS nombre_jefe, e2.oficio AS oficio_jefe
+FROM emp e
+RIGHT JOIN emp e2 ON e.dir = e2.emp_no
+ORDER BY 2;
+
+--42. Oficios del departamento 20 que no están en VENTAS
+SELECT apellido, dept_no, oficio
+FROM emp
+WHERE oficio IN (SELECT oficio FROM emp WHERE dept_no = 20)
+ AND oficio NOT IN (SELECT oficio FROM emp e, dept2 d
+ WHERE e.dept_no = d.dept_no
+ AND UPPER(dnombre) = 'VENTAS');
+
+--43. Empleados de dept 20/30 con salario > 2 veces el mínimo
+SELECT emp_no, dept_no, apellido
+FROM emp
+WHERE dept_no IN (20, 30)
+ AND salario > (SELECT 2 * MIN(salario) FROM emp)
+ AND UPPER(oficio) NOT LIKE 'PRES%';
+
+--44. Personas con sueldo > 500,000 que el máximo del turno
+SELECT apellido, turno, funcion, salario
+FROM plantilla
+WHERE salario > (SELECT COALESCE(MAX(salario), 0) + 500000
+ FROM plantilla
+ WHERE UPPER(turno) = 'M')
+ AND funcion IN (SELECT funcion FROM plantilla WHERE UPPER(apellido) LIKE 'NU%');
+
+--45. Empleado más antiguo de la empresa
+SELECT apellido, fecha_alt AS fecha
+FROM emp
+WHERE fecha_alt = (SELECT MIN(fecha_alt) FROM emp);
+
+--46. Empleados con el mismo oficio que JIMENEZ
+SELECT apellido, oficio
+FROM emp
+WHERE oficio IN (SELECT oficio FROM emp WHERE UPPER(apellido) = 'JIMENEZ');
+
+--47. Salarios mayores que el máximo del departamento 30
+SELECT apellido, oficio, salario, dept_no
+FROM emp
+WHERE salario > (SELECT MAX(salario) FROM emp WHERE dept_no = 30);
+
+--48. Empleados del departamento 20 con oficios de VENTAS
+SELECT apellido, oficio
+FROM emp
+WHERE dept_no = 20
+ AND UPPER(oficio) IN (SELECT oficio FROM emp e, dept2 d
+ WHERE UPPER(dnombre) = 'VENTAS'
+ AND e.dept_no = d.dept_no);
+
+--49. Empleados que no ganan ni el máximo ni el mínimo
+SELECT apellido, oficio
+FROM emp
+WHERE salario <> (SELECT MAX(salario) FROM emp)
+ AND salario <> (SELECT MIN(salario) FROM emp);
+
+--50. Máximo salario por departamento con condiciones
+--Corregido
+SELECT MAX(salario) AS maximo, dept_no
+FROM emp
+WHERE SUBSTRING(apellido FROM 1 FOR 1) NOT IN (
+ SELECT SUBSTRING(apellido FROM 1 FOR 1)
+ FROM emp
+ WHERE (salario, dept_no) IN (
+ SELECT MAX(salario), dept_no
+ FROM emp
+GROUP BY dept_no
+ )
+)
+GROUP BY dept_no
+HAVING COUNT(*)>2
+
+--51. Número de oficios por departamento (excluyendo los que tienen VENDEDORES)
+SELECT COUNT(DISTINCT oficio) AS numero, d.dept_no AS num_dep, dnombre AS nombre
+FROM emp e, dept2 d
+WHERE e.dept_no = d.dept_no
+ AND d.dept_no NOT IN (SELECT dept_no FROM emp WHERE UPPER(oficio) LIKE 'VENDE%')
+GROUP BY d.dept_no, dnombre;
+
+--52. Empleado que más gana y que menos gana
+SELECT e1.dept_no AS dep_max, e1.salario AS maximo, e1.apellido,
+ e2.dept_no AS dep_min, e2.salario AS minimo, e2.apellido
+FROM emp e1, emp e2
+WHERE e1.salario = (SELECT MAX(salario) FROM emp)
+ AND e2.salario = (SELECT MIN(salario) FROM emp);
+
+--53. Departamento con más altas en Diciembre
+--Corregido
+SELECT dnombre, COUNT(*) AS empleados
+FROM dept2 d, emp e
+WHERE EXTRACT(MONTH FROM fecha_alt) = 12
+  AND e.dept_no = d.dept_no
+GROUP BY dnombre
+HAVING COUNT(*) = (
+    SELECT COUNT(*)
+    FROM emp
+    WHERE EXTRACT(MONTH FROM fecha_alt) = 12
+    GROUP BY dept_no
+    ORDER BY 1 DESC
+    LIMIT 1
+);
+
+--54. Mínimo y máximo por departamento con condiciones
+SELECT dept_no, MIN(salario) AS minimo, MAX(salario) AS maximo
+FROM emp e
+WHERE SUBSTRING(apellido FROM 1 FOR 1) NOT IN (
+ SELECT SUBSTRING(dnombre FROM 1 FOR 1)
+ FROM dept2 d
+ WHERE e.dept_no = d.dept_no
+)
+GROUP BY dept_no
+HAVING MAX(salario) - MIN(salario) > (SELECT AVG(salario) FROM emp);
+
+--55. Empleado más joven de cada departamento
+SELECT dnombre, e.dept_no AS numero, apellido, fecha_alt
+FROM emp e, dept2 d
+WHERE e.dept_no = d.dept_no
+ AND fecha_alt = (SELECT MAX(fecha_alt)
+ FROM emp e2
+ WHERE e.dept_no = e2.dept_no
+ GROUP BY dept_no);
+
+--56. Empleado que más gana del departamento con media salarial más alta
+SELECT apellido, oficio, dept_no
+FROM emp e
+WHERE salario IN (SELECT MAX(salario)
+ FROM emp e2
+ WHERE e.dept_no = e2.dept_no
+ GROUP BY dept_no
+HAVING AVG(salario) = (
+ SELECT MAX(round(AVG(salario))
+ FROM emp
+ GROUP BY dept_no
+);
+
+--57. Empleados que son jefes de alguien
+SELECT e1.apellido, e1.oficio, e1.dept_no
+FROM emp e1
+WHERE EXISTS (SELECT 1 FROM emp e2 WHERE e1.emp_no = e2.dir)
+ORDER BY apellido;
+
+--58. Personas con salario > media de su hospital
+SELECT apellido, empleado_no
+FROM plantilla p
+WHERE salario > (SELECT AVG(salario)
+ FROM plantilla p2
+ WHERE p2.hospital_cod = p.hospital_cod);
+
+--59. Inserción en PLANTILLA
+INSERT INTO plantilla (hospital_cod, sala_cod, empleado_no, apellido, funcion
+, turno, salario)
+VALUES (22, 2, 1234, 'Garcia J.', 'Enfermero', 'M', 3000000);
+
+--60. Inserción sin especificar columnas
+INSERT INTO plantilla VALUES (22, 2, 1234, 'Garcia J.', 'Enfermero', 'M', 3000000);
+
+--61. Inserción fallida - Explicación
+-- Falla por: comilla sin cerrar, valores nulos en columnas NOT NULL
+INSERT INTO plantilla (empleado_no, apellido) VALUES (1234, 'Garcia J');
+
+--62. Inserción con campos omitidos
+INSERT INTO plantilla (hospital_cod, sala_cod, empleado_no, apellido)
+VALUES (2, 22, 1234, 'Garcia J.');
+
+--63. Actualización de paciente
+UPDATE enfermo SET direccion = 'Alcala 411' WHERE inscripcion = 74835;
+
+--64. Poner direcciones a NULL
+UPDATE enfermo SET direccion = NULL;
+
+--65. Copiar datos de un paciente a otro
+UPDATE enfermo
+SET (direccion, fecha_nac) = (SELECT direccion, fecha_nac
+ FROM enfermo
+ WHERE inscripcion = 14024)
+WHERE inscripcion = 10995;
+
+--66. Incremento de camas en un 10%
+ALTER TABLE hospital ALTER COLUMN num_cama TYPE INTEGER;
+UPDATE hospital SET num_cama = num_cama * 1.1;
+
+--67. Creación de tablas con restricciones
+DROP TABLE IF EXISTS hospitales22 CASCADE;
+CREATE TABLE hospitales22 (
+ hospital_cod INTEGER,
+ nombre VARCHAR(15),
+ direccion VARCHAR(20),
+ telefono CHAR(8),
+ num_cama INTEGER,
+ CONSTRAINT hospital_pk PRIMARY KEY (hospital_cod)
+);
+
+DROP TABLE IF EXISTS plantilla22 CASCADE;
+CREATE TABLE plantilla22 (
+ hospital_cod INTEGER NOT NULL,
+ sala_cod INTEGER NOT NULL,
+ empleado_no INTEGER,
+ apellido VARCHAR(15),
+ funcion CHAR(10),
+ turno CHAR(1),
+ salario NUMERIC(10),
+ CONSTRAINT empleado_pk PRIMARY KEY (empleado_no),
+ CONSTRAINT hospital_fk FOREIGN KEY (hospital_cod) REFERENCES hospital(hospital_cod),
+ CONSTRAINT sala_fk FOREIGN KEY (sala_cod, hospital_cod) REFERENCES sala(sala_cod, hospital_cod),
+ CONSTRAINT turno_ch CHECK (UPPER(TRIM(turno)) IN ('T', 'M', 'N')),
+ CONSTRAINT salario_ch CHECK (COALESCE(salario, 0) > 0)
+);
+
+--68. Rellenar HOSPITALES22
+INSERT INTO hospitales22 SELECT * FROM hospital;
+-- La segunda inserción daría error por duplicidad de clave primaria
+
+--69. Crear tabla VARONES
+DROP TABLE IF EXISTS varones CASCADE;
+CREATE TABLE varones (
+ inscripcion INTEGER NOT NULL,
+ apellido VARCHAR(25),
+ direccion VARCHAR(20),
+ fecha_nac DATE,
+ s CHAR(1),
+ nss BIGINT
+);
+
+--70. Crear tabla EMPLEADOS
+CREATE TABLE empleados AS
+SELECT * FROM emp
+WHERE UPPER(oficio) = 'DIRECTOR' OR comision > 0.25 * salario;
+
+--71. Vistas y JOIN
+DROP VIEW IF EXISTS emp10 CASCADE;
+CREATE VIEW emp10 AS SELECT * FROM emp WHERE dept_no IN (10, 20);
+DROP VIEW IF EXISTS emp30 CASCADE;
+CREATE VIEW emp30 AS SELECT * FROM emp WHERE dept_no IN (10, 30);
+SELECT e1.dept_no, e2.dept_no, e1.apellido, e2.oficio, e1.salario, COALESCE(e1.comision, 0)
+FROM emp10 e1, emp30 e2
+WHERE e1.dept_no = e2.dept_no;
+
+--72. JOIN de DEPT2 con vista
+SELECT e1.dept_no, e2.dept_no, e1.apellido, e1.oficio, e1.salario, COALESCE(e1.comision, 0)
+FROM emp10 e1, emp e2
+WHERE e1.dept_no = e2.dept_no;
+
+--73. Vista de enfermos con hospital
+DROP VIEW IF EXISTS enferm CASCADE;
+CREATE VIEW enferm AS
+SELECT e.apellido, e.direccion, e.fecha_nac, h.nombre AS hospital
+FROM enfermo e, hospital h, ocupacion o
+WHERE e.inscripcion = o.inscripcion
+ AND o.hospital_cod = h.hospital_cod;
+-- No es posible modificar datos a través de esta vista porque maneja múltipl es tablas.
+
+--74. Vista de suma de salarios por departamento
+DROP VIEW IF EXISTS emp_cua CASCADE;
+CREATE VIEW emp_cua AS
+SELECT dept_no, SUM(salario) AS salariototal
+FROM emp
+GROUP BY dept_no;
+
+--75. Vista con WITH CHECK OPTION
+DROP VIEW IF EXISTS emp_ter CASCADE;
+CREATE VIEW emp_ter AS
+SELECT * FROM emp
+WHERE dept_no = 10
+WITH CHECK OPTION;
+
+--🟡 EJERCICIOS 76-105 (Nivel Medio y Avanzado)
+--76. Hospitales con más de 300 camas
+SELECT nombre, num_cama
+FROM hospital
+WHERE num_cama > 300
+ORDER BY num_cama DESC;
+
+--77. Salas del hospital "La Paz"
+SELECT s.nombre AS sala, s.num_cama
+FROM sala s, hospital h
+WHERE s.hospital_cod = h.hospital_cod
+ AND h.nombre = 'La Paz';
+
+--78. Salario medio por turno
+SELECT turno, AVG(salario) AS salario_medio
+FROM plantilla
+GROUP BY turno
+ORDER BY turno;
+
+--79. Enfermos por sexo
+SELECT s AS sexo, COUNT(*) AS cantidad
+FROM enfermo
+GROUP BY s;
+
+--80. Empleados con comisión
+SELECT apellido, oficio, salario, comision
+FROM emp
+WHERE comision IS NOT NULL AND comision > 0
+ORDER BY comision DESC;
+
+--81. Doctores con especialidad que contiene "logía"
+SELECT apellido, especialidad
+FROM doctor
+WHERE especialidad LIKE '%logía%';
+
+--82. Pacientes nacidos después de 1975
+SELECT apellido, TO_CHAR(fecha_nac, 'DD/MM/YYYY') AS fecha_nacimiento
+FROM enfermo
+WHERE EXTRACT(YEAR FROM fecha_nac) > 1975;
+
+--83. Salas con más de 20 camas
+SELECT s.nombre, s.num_cama, h.nombre AS hospital
+FROM sala s, hospital h
+WHERE s.hospital_cod = h.hospital_cod
+ AND s.num_cama > 20
+ORDER BY s.num_cama DESC;
+
+--84. Tres empleados con salario más alto (Postgre)
+SELECT apellido, oficio, salario
+FROM emp
+ORDER BY salario DESC
+LIMIT 3;
+
+--85. Edad actual de cada paciente
+SELECT apellido,
+ fecha_nac,
+ FLOOR(EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_nac))) AS edad
+FROM enfermo
+ORDER BY edad DESC;
+
+--86. Hospitales con número de salas y camas totales
+SELECT h.hospital_cod, h.nombre,
+ COUNT(DISTINCT s.sala_cod) AS num_salas,
+ SUM(s.num_cama) AS total_camas
+FROM hospital h, sala s
+WHERE h.hospital_cod = s.hospital_cod
+GROUP BY h.hospital_cod, h.nombre
+ORDER BY total_camas DESC;
+
+--87. Doctores en hospitales con más de 500 camas
+SELECT d.apellido, d.especialidad, h.nombre AS hospital, h.num_cama
+FROM doctor d, hospital h
+WHERE d.hospital_cod = h.hospital_cod
+ AND h.num_cama > 500;
+
+--88. Pacientes con hospital y sala
+SELECT e.apellido AS paciente,
+ h.nombre AS hospital,
+ s.nombre AS sala,
+ o.cama
+FROM enfermo e, ocupacion o, hospital h, sala s
+WHERE e.inscripcion = o.inscripcion
+ AND o.hospital_cod = h.hospital_cod
+ AND o.hospital_cod = s.hospital_cod
+ AND o.sala_cod = s.sala_cod
+ORDER BY h.nombre, s.nombre;
+
+--89. Empleados que ganan más que su jefe
+SELECT e.apellido AS empleado, e.salario AS salario_empleado,
+ j.apellido AS jefe, j.salario AS salario_jefe
+FROM emp e, emp j
+WHERE e.dir = j.emp_no
+ AND e.salario > j.salario;
+
+--90. Porcentaje de ocupación de cada hospital
+SELECT h.nombre,
+ h.num_cama AS camas_totales,
+ COUNT(o.inscripcion) AS pacientes,
+ ROUND(COUNT(o.inscripcion)::NUMERIC / h.num_cama * 100, 2) AS porcentaje_ocupacion
+FROM hospital h, ocupacion o
+WHERE h.hospital_cod = o.hospital_cod
+GROUP BY h.nombre, h.num_cama
+ORDER BY porcentaje_ocupacion DESC;
+
+--91. Departamentos sin empleados
+SELECT d.dept_no, d.dnombre, d.loc
+FROM dept2 d
+WHERE d.dept_no NOT IN (SELECT DISTINCT dept_no FROM emp WHERE dept_no IS NOT
+NULL);
+
+--92. Salario promedio por oficio, excluyendo directores
+SELECT oficio, COUNT(*) AS cantidad, AVG(salario) AS salario_medio
+FROM emp
+WHERE UPPER(oficio) != 'DIRECTOR'
+GROUP BY oficio
+ORDER BY salario_medio DESC;
+
+--93. Pacientes y médico que les atiende (limitado a 10)
+SELECT e.apellido AS paciente,
+ d.apellido AS doctor,
+ d.especialidad
+FROM enfermo e, doctor d, hospital h, ocupacion o
+WHERE e.inscripcion = o.inscripcion
+ AND o.hospital_cod = d.hospital_cod
+ AND o.hospital_cod = h.hospital_cod
+LIMIT 10;
+
+--94. Salas sin pacientes ingresados
+SELECT h.nombre AS hospital, s.nombre AS sala, s.num_cama
+FROM sala s, hospital h
+WHERE s.hospital_cod = h.hospital_cod
+ AND NOT EXISTS (SELECT 1 FROM ocupacion o
+ WHERE o.hospital_cod = s.hospital_cod
+ AND o.sala_cod = s.sala_cod)
+ORDER BY h.nombre, s.nombre;
+
+--95. Antigüedad de cada empleado
+SELECT apellido, oficio,
+ EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_alt)) AS años,
+ EXTRACT(MONTH FROM AGE(CURRENT_DATE, fecha_alt)) AS meses
+FROM emp
+ORDER BY años DESC, meses DESC;
+
+--96. Ranking de salarios por departamento
+SELECT apellido, dept_no, salario,
+ RANK() OVER (PARTITION BY dept_no ORDER BY salario DESC) AS ranking_salarial
+FROM emp
+ORDER BY dept_no, ranking_salarial;
+
+--97. Comparación con promedio del departamento
+SELECT apellido, oficio, dept_no, salario,
+ ROUND(AVG(salario) OVER (PARTITION BY dept_no), 2) AS media_departamento,
+ ROUND(salario - AVG(salario) OVER (PARTITION BY dept_no), 2) AS diferencia
+FROM emp
+ORDER BY dept_no, diferencia DESC;
+
+--98. Pacientes que comparten la misma sala
+SELECT o1.hospital_cod, o1.sala_cod,
+ e1.apellido AS paciente1, e2.apellido AS paciente2
+FROM ocupacion o1, ocupacion o2, enfermo e1, enfermo e2
+WHERE o1.hospital_cod = o2.hospital_cod
+ AND o1.sala_cod = o2.sala_cod
+ AND o1.inscripcion < o2.inscripcion
+ AND e1.inscripcion = o1.inscripcion
+ AND e2.inscripcion = o2.inscripcion
+ORDER BY o1.hospital_cod, o1.sala_cod;
+
+--99. Doctores en más de una especialidad
+SELECT apellido, COUNT(DISTINCT especialidad) AS num_especialidades
+FROM doctor
+GROUP BY apellido
+HAVING COUNT(DISTINCT especialidad) > 1;
+text
+
+--100. Desviación estándar de salarios por hospital
+SELECT h.nombre AS hospital,
+ ROUND(AVG(p.salario), 2) AS salario_medio,
+ ROUND(STDDEV(p.salario), 2) AS desviacion_std,
+ ROUND(VARIANCE(p.salario), 2) AS varianza
+FROM plantilla p, hospital h
+WHERE p.hospital_cod = h.hospital_cod
+GROUP BY h.nombre
+ORDER BY desviacion_std DESC;
+
+---101. Empleados con salarios cercanos (±5%)
+SELECT p1.apellido AS empleado1, p2.apellido AS empleado2,  
+p1.funcion, p1.salario AS salario1, p2.salario AS salario2, 
+ROUND(ABS(p1.salario - p2.salario)::NUMERIC / p1.salario * 100, 2)
+AS diferencia_porcentual 
+FROM plantilla p1, plantilla p2  
+WHERE p1.funcion = p2.funcion  
+AND p1.empleado_no < p2.empleado_no 
+AND ABS(p1.salario - p2.salario)::NUMERIC / p1.salario <= 0.05 
+ORDER BY p1.funcion, diferencia_porcentual;
+
+--102. Vista de resumen de ocupación hospitalaria 
+DROP VIEW IF EXISTS resumen_ocupacion CASCADE; 
+CREATE VIEW resumen_ocupacion AS 
+SELECT h.hospital_cod, h.nombre AS hospital, 
+COUNT(DISTINCT o.inscripcion) AS pacientes_ingresados, 
+COUNT(DISTINCT s.sala_cod) AS salas_activas, 
+SUM(s.num_cama) AS camas_totales, 
+ROUND(COUNT(DISTINCT o.inscripcion)::NUMERIC / NULLIF(SUM(s.num_cama), 
+0) * 100, 2) AS ocupacion_porcentaje 
+FROM hospital h, sala s, ocupacion o  
+WHERE h.hospital_cod = s.hospital_cod  
+AND s.hospital_cod = o.hospital_cod  
+AND s.sala_cod = o.sala_cod  
+GROUP BY h.hospital_cod, h.nombre; 
+-- Consultar la vista 
+SELECT * FROM resumen_ocupacion ORDER BY ocupacion_porcentaje DESC;
+
+--103. Percentil 90 de salarios (Postgre)
+SELECT apellido, oficio, salario 
+FROM emp  
+WHERE salario > (SELECT PERCENTILE_CONT(0.9) WITHIN GROUP (ORDER BY salario) 
+FROM emp) 
+ORDER BY salario DESC; 
+
+--104. Incremento salarial por departamento -- Ver antes 
+SELECT dept_no, ROUND(AVG(salario), 2) 
+AS salario_medio_antes 
+FROM emp  
+GROUP BY dept_no  
+ORDER BY dept_no; -- Actualizar 
+UPDATE emp  
+SET salario = salario *  
+CASE dept_no 
+WHEN 20 THEN 1.10 
+WHEN 30 THEN 1.08 
+ELSE 1.05 
+END 
+WHERE dept_no IS NOT NULL; -- Ver después 
+SELECT dept_no, ROUND(AVG(salario), 2) AS nuevo_salario_medio 
+FROM emp  
+GROUP BY dept_no  
+ORDER BY dept_no; 
+
+--105. Informe completo del hospital 22 
+SELECT '=== HOSPITAL ===' 
+AS seccion, h.nombre AS informacion  
+FROM hospital h WHERE h.hospital_cod = 22 
+UNION ALL 
+SELECT '=== SALAS ===', s.nombre || ' 
+(' || s.num_cama || ' camas)'  
+FROM sala s WHERE s.hospital_cod = 22 
+UNION ALL 
+SELECT '=== PERSONAL ===', p.apellido || ' - ' || p.funcion || 
+' (Turno: ' || 
+p.turno || ')' 
+FROM plantilla p
+WHERE p.hospital_cod = 22 
+UNION ALL 
+SELECT '=== DOCTORES ===', d.apellido || ' - ' || d.especialidad 
+FROM doctor d WHERE d.hospital_cod = 22 
+UNION ALL 
+SELECT '=== PACIENTES ===', e.apellido || ' (Sala: ' || o.sala_cod || ', Cama
+: ' || o.cama || ')' 
+FROM ocupacion o, enfermo e  
+WHERE o.hospital_cod = 22  
+AND o.inscripcion = e.inscripcion; 
+
+
+------------------------------------
+--EJERCICIOS 106-115 (Nivel Medio)
+------------------------------------
+--106. Pacientes que cumplen años en el mes actual 
+SELECT apellido, fecha_nac, s AS sexo 
+FROM enfermo  
+WHERE EXTRACT(MONTH FROM fecha_nac) = EXTRACT(MONTH FROM CURRENT_DATE) 
+ORDER BY EXTRACT(DAY FROM fecha_nac);
+
+--107. Hospitales con media salarial del personal 
+SELECT h.nombre AS hospital,  
+ROUND(AVG(p.salario), 2) AS salario_medio, 
+COUNT(p.empleado_no) AS total_personal 
+FROM hospital h, plantilla p  
+WHERE h.hospital_cod = p.hospital_cod  
+GROUP BY h.nombre  
+ORDER BY salario_medio DESC;
+
+--108. Turnos con más de 5 empleados 
+SELECT turno, COUNT(*) AS num_empleados 
+FROM plantilla  
+GROUP BY turno  
+HAVING COUNT(*) > 5 
+ORDER BY num_empleados DESC; 
+
+--109. Pacientes que comparten inicial de apellido
+SELECT SUBSTRING(apellido FROM 1 FOR 1) AS inicial,  
+COUNT(*) AS cantidad, 
+STRING_AGG(apellido, ', ' ORDER BY apellido) AS pacientes 
+FROM enfermo  
+GROUP BY SUBSTRING(apellido FROM 1 FOR 1) 
+HAVING COUNT(*) > 1 
+ORDER BY cantidad DESC; 
+
+--110. Personal que gana más que el promedio de su sala 
+SELECT p.apellido, p.funcion, p.salario,  
+h.nombre AS sala, h.nombre AS hospital, 
+ROUND(s.avg_salario, 2) AS media_sala 
+FROM plantilla p,  
+(SELECT hospital_cod, sala_cod, AVG(salario) AS avg_salario  
+FROM plantilla  
+GROUP BY hospital_cod, sala_cod) s, hospital h 
+WHERE p.hospital_cod = s.hospital_cod  
+AND p.sala_cod = s.sala_cod  
+AND p.hospital_cod = h.hospital_cod 
+AND p.salario > s.avg_salario 
+ORDER BY (p.salario - s.avg_salario) DESC;
+
+--111. Departamentos con número de empleados y rango 
+--salarial 
+SELECT d.dnombre, d.loc, 
+COUNT(e.emp_no) AS num_empleados, 
+MIN(e.salario) AS salario_minimo, 
+MAX(e.salario) AS salario_maximo, 
+MAX(e.salario) - MIN(e.salario) AS rango_salarial 
+FROM dept2 d, emp e  
+WHERE d.dept_no = e.dept_no  
+GROUP BY d.dnombre, d.loc 
+ORDER BY rango_salarial DESC NULLS LAST; 
+
+--112. Segunda sala con más camas en cada hospital
+WITH ranking_salas AS (
+SELECT hospital_cod, nombre, num_cama, 
+DENSE_RANK() OVER (PARTITION BY hospital_cod ORDER BY num_cama DESC) AS rank 
+FROM sala 
+) 
+SELECT h.nombre AS hospital, r.nombre AS sala, r.num_cama 
+FROM ranking_salas r, hospital h 
+WHERE r.rank = 2  
+AND r.hospital_cod = h.hospital_cod 
+ORDER BY h.nombre;
+
+--113. Personal con más de 10 años de antigüedad 
+SELECT apellido, oficio, fecha_alt, 
+EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_alt)) AS antiguedad_anios 
+FROM emp  
+WHERE EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_alt)) > 10 
+ORDER BY antiguedad_anios DESC;
+
+--114. Hospitales con salas de más de 30 camas 
+SELECT DISTINCT h.nombre, h.hospital_cod 
+FROM hospital h, sala s  
+WHERE h.hospital_cod = s.hospital_cod  
+AND s.num_cama > 30 
+ORDER BY h.nombre;
+
+--115. Empleados en percentil 10 o 90 
+WITH estadisticos AS ( 
+SELECT PERCENTILE_CONT(0.1) WITHIN GROUP (ORDER BY salario) AS p10, 
+PERCENTILE_CONT(0.9) WITHIN GROUP (ORDER BY salario) AS p90 
+FROM emp 
+) 
+SELECT apellido, oficio, salario 
+FROM emp, estadisticos 
+WHERE salario < p10 OR salario > p90 
+ORDER BY salario; 
+
+------------------------------------------
+---EJERCICIOS 116-135 (Nivel Avanzado)
+------------------------------------------
+--116. Edad en años, meses y días 
+SELECT apellido, fecha_nac, 
+EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_nac)) AS años, 
+EXTRACT(MONTH FROM AGE(CURRENT_DATE, fecha_nac)) AS meses, 
+EXTRACT(DAY FROM AGE(CURRENT_DATE, fecha_nac)) AS dias 
+FROM enfermo  
+ORDER BY años DESC; 
+
+--117. Salas por encima de la media de camas de su hospital 
+SELECT h.nombre AS hospital, s.nombre AS sala, s.num_cama, 
+h.avg_camas AS media_camas_hospital 
+FROM sala s,  
+(SELECT hospital_cod, AVG(num_cama) AS avg_camas  
+FROM sala  
+GROUP BY hospital_cod) h 
+WHERE s.hospital_cod = h.hospital_cod  
+AND s.num_cama > h.avg_camas 
+ORDER BY h.nombre, s.num_cama DESC; 
+
+--118. Oficios con porcentaje sobre total 
+SELECT funcion, COUNT(*) AS total,  
+ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM plantilla), 2) AS porcentaje 
+FROM plantilla  
+GROUP BY funcion  
+ORDER BY total DESC;
+
+--119. Jefes con al menos 3 subordinados 
+SELECT j.emp_no, j.apellido AS jefe, j.oficio, COUNT(e.emp_no)
+AS num_subordinados 
+FROM emp j, emp e  
+WHERE j.emp_no = e.dir  
+GROUP BY j.emp_no, j.apellido, j.oficio 
+HAVING COUNT(e.emp_no) >= 3 
+ORDER BY num_subordinados DESC;
+
+--120. Ratio camas/pacientes por hospital 
+SELECT h.nombre, h.num_cama AS camas, 
+COUNT(DISTINCT o.inscripcion) AS pacientes, 
+ROUND(h.num_cama::NUMERIC / NULLIF(COUNT(DISTINCT o.inscripcion), 0), 
+2) AS ratio_camas_por_paciente 
+FROM hospital h, ocupacion o  
+WHERE h.hospital_cod = o.hospital_cod  
+GROUP BY h.nombre, h.num_cama 
+ORDER BY ratio_camas_por_paciente;
+
+---121. Empleados con salario superior al promedio de su 
+--oficio 
+SELECT e1.apellido, e1.oficio, e1.salario, 
+ROUND((SELECT AVG(e2.salario) FROM emp e2 WHERE e2.oficio = e1.oficio), 2) 
+AS media_oficio 
+FROM emp e1  
+WHERE e1.salario > (SELECT AVG(e2.salario) FROM emp e2 WHERE e2.oficio = e1.oficio) 
+ORDER BY e1.oficio, e1.salario DESC;
+
+--122. Hospitales con todas las especialidades básicas 
+WITH especialidades_basicas AS ( 
+SELECT unnest(ARRAY['Cardiología', 'Pediatría', 'Psiquiatría'])
+AS especialidad 
+) 
+SELECT h.hospital_cod, h.nombre 
+FROM hospital h 
+WHERE NOT EXISTS ( 
+SELECT 1 FROM especialidades_basicas eb 
+WHERE NOT EXISTS ( 
+SELECT 1 FROM doctor d  
+WHERE d.hospital_cod = h.hospital_cod  
+AND d.especialidad = eb.especialidad 
+) 
+);
+
+--123. Progresión de salarios (diferencia con anterior) 
+SELECT apellido, oficio, fecha_alt, salario, 
+LAG(salario, 1, 0) OVER (ORDER BY fecha_alt) AS salario_anterior, 
+salario - LAG(salario, 1, 0) OVER (ORDER BY fecha_alt) AS diferencia 
+FROM emp  
+ORDER BY fecha_alt;
+
+--124. Pacientes en más de una sala 
+SELECT e.apellido, COUNT(DISTINCT o.sala_cod) AS salas_diferentes 
+FROM enfermo e, ocupacion o  
+WHERE e.inscripcion = o.inscripcion  
+GROUP BY e.apellido  
+HAVING COUNT(DISTINCT o.sala_cod) > 1; 
+
+--125. Salario total con subtotales (ROLLUP) 
+SELECT dept_no, oficio, SUM(salario) AS total_salarios, COUNT(*)
+AS empleados 
+FROM emp  
+GROUP BY ROLLUP(dept_no, oficio) 
+ORDER BY dept_no, oficio; 
+
+--126. Paciente más joven y más viejo por hospital 
+WITH paciente_edad AS ( 
+SELECT e.apellido, e.fecha_nac, o.hospital_cod, 
+ROW_NUMBER() OVER (PARTITION BY o.hospital_cod ORDER BY e.fecha_nac ASC) 
+AS mas_viejo, 
+ROW_NUMBER() OVER (PARTITION BY o.hospital_cod 
+ORDER BY e.fecha_nac DESC) AS mas_joven 
+FROM enfermo e, ocupacion o  
+WHERE e.inscripcion = o.inscripcion 
+) 
+SELECT h.nombre AS hospital, 
+MAX(CASE WHEN pe.mas_viejo = 1 THEN pe.apellido END)
+AS paciente_mas_viejo, 
+MAX(CASE WHEN pe.mas_viejo = 1 THEN pe.fecha_nac END)
+AS fecha_viejo, 
+MAX(CASE WHEN pe.mas_joven = 1 THEN pe.apellido END) 
+AS paciente_mas_joven, 
+MAX(CASE WHEN pe.mas_joven = 1 THEN pe.fecha_nac END) 
+AS fecha_joven 
+FROM paciente_edad pe, hospital h 
+WHERE pe.hospital_cod = h.hospital_cod 
+GROUP BY h.nombre 
+ORDER BY h.nombre;
+
+--127. PIVOT: Pacientes por año de nacimiento y sexo 
+SELECT * FROM crosstab( 
+SELECT EXTRACT(YEAR FROM fecha_nac) AS anyo_nac, s AS sexo, COUNT(*)  
+FROM enfermo  
+GROUP BY EXTRACT(YEAR FROM fecha_nac), s  
+ORDER BY 1, 2, 
+SELECT DISTINCT s FROM enfermo ORDER BY s 
+) AS pivot(anyo_nac NUMERIC, hombres BIGINT, mujeres BIGINT);
+
+--128. Doctores sin personal en su misma especialidad 
+SELECT d.apellido, d.especialidad, h.nombre AS hospital 
+FROM doctor d, hospital h 
+WHERE d.hospital_cod = h.hospital_cod 
+AND NOT EXISTS ( 
+SELECT 1 FROM plantilla p, sala s 
+WHERE p.hospital_cod = d.hospital_cod 
+AND p.funcion = d.especialidad 
+) 
+ORDER BY h.nombre, d.apellido; 
+
+--129. Coeficiente de variación de salarios por departamento 
+SELECT d.dnombre, 
+COUNT(e.salario) AS num_empleados, 
+ROUND(AVG(e.salario), 2) AS media, 
+ROUND(STDDEV(e.salario), 2) AS desviacion, 
+ROUND(STDDEV(e.salario)::NUMERIC / NULLIF(AVG(e.salario), 0) * 100, 2) 
+AS cv_porcentaje 
+FROM dept2 d, emp e  
+WHERE d.dept_no = e.dept_no 
+GROUP BY d.dnombre 
+ORDER BY cv_porcentaje DESC; 
+
+--130. Empleados con mismo oficio y departamento que su 
+--jefe 
+SELECT e.apellido AS empleado, e.oficio,  
+j.apellido AS jefe, j.oficio AS oficio_jefe, 
+e.dept_no 
+FROM emp e, emp j  
+WHERE e.dir = j.emp_no  
+AND e.oficio = j.oficio 
+AND e.dept_no = j.dept_no; 
+
+--131. Empleados que ganan menos del 80% del promedio de 
+--su oficio 
+-- Ver los empleados afectados 
+SELECT e.apellido, e.oficio, e.salario,  
+ROUND(avg_oficio.media_oficio, 2) AS media_oficio, 
+ROUND(e.salario::NUMERIC / avg_oficio.media_oficio * 100, 2) 
+AS porcentaje 
+FROM emp e, (SELECT oficio, AVG(salario) AS media_oficio FROM emp 
+GROUP BY oficio) avg_oficio 
+WHERE e.oficio = avg_oficio.oficio  
+AND e.salario < avg_oficio.media_oficio * 0.8; -- Actualización 
+UPDATE emp e  
+SET salario = salario * 1.15 
+FROM (SELECT oficio, AVG(salario) AS media_oficio FROM emp GROUP BY oficio) avg_oficio 
+WHERE e.oficio = avg_oficio.oficio  
+AND e.salario < avg_oficio.media_oficio * 0.8;
+
+--132. Números de cama disponibles por sala 
+SELECT s.hospital_cod, s.sala_cod, generate_series(1, s.num_cama) 
+AS cama_numero,
+CASE WHEN o.cama IS NOT NULL THEN 'OCUPADA' ELSE 'LIBRE' END AS estado 
+FROM sala s 
+LEFT JOIN ocupacion o ON s.hospital_cod = o.hospital_cod  
+AND s.sala_cod = o.sala_cod  
+AND generate_series(1, s.num_cama) = o.cama 
+ORDER BY s.hospital_cod, s.sala_cod, cama_numero;
+
+--133. Salario acumulado por departamento 
+SELECT apellido, dept_no, oficio, salario, 
+SUM(salario) OVER (PARTITION BY dept_no ORDER BY salario)
+AS salario_acumulado, 
+ROUND(salario::NUMERIC / SUM(salario) OVER (PARTITION BY dept_no) * 100, 2) 
+AS porcentaje_departamento 
+FROM emp  
+ORDER BY dept_no, salario; 
+
+--134. Jerarquía de empleados (Recursive CTE) 
+WITH RECURSIVE jerarquia (emp_no, apellido, nivel, camino) 
+AS ( 
+-- Nivel base: empleados sin jefe (PRESIDENTE) 
+SELECT emp_no, apellido, 1 AS nivel, apellido AS camino 
+FROM emp  
+WHERE dir IS NULL 
+UNION ALL 
+-- Nivel recursivo 
+SELECT e.emp_no, e.apellido, j.nivel + 1,  j.camino || ' -> ' || e.apellido 
+AS camino 
+FROM emp e, jerarquia j 
+WHERE e.dir = j.emp_no 
+) 
+SELECT apellido, nivel, camino 
+FROM jerarquia  
+ORDER BY nivel, apellido; 
+
+--135. Vista de informe ejecutivo completo 
+DROP VIEW IF EXISTS informe_ejecutivo CASCADE;
+
+CREATE VIEW informe_ejecutivo AS
+SELECT  
+h.hospital_cod, 
+h.nombre AS hospital, 
+h.num_cama AS camas_totales, 
+COUNT(DISTINCT s.sala_cod) AS total_salas, 
+COUNT(DISTINCT p.empleado_no) AS total_personal, 
+ROUND(AVG(p.salario), 2) AS salario_medio_personal, 
+COUNT(DISTINCT d.doctor_no) AS total_doctores, 
+COUNT(DISTINCT e.inscripcion) AS pacientes_actuales, 
+ROUND(
+        COUNT(DISTINCT e.inscripcion)::NUMERIC 
+        / NULLIF(h.num_cama, 0) * 100, 2
+    ) AS ocupacion_porcentaje, 
+
+    COUNT(DISTINCT CASE 
+        WHEN UPPER(p.funcion) = 'MÉDICO' 
+        THEN p.empleado_no 
+    END) AS num_medicos, 
+
+    COUNT(DISTINCT CASE 
+        WHEN UPPER(p.funcion) IN ('ENFERMERO', 'ENFERMERA') 
+        THEN p.empleado_no 
+    END) AS num_enfermeros, 
+
+    COUNT(DISTINCT CASE 
+        WHEN UPPER(d.especialidad) = 'CARDIOLOGÍA' 
+        THEN d.doctor_no 
+    END) AS cardiologos, 
+
+    COUNT(DISTINCT CASE 
+        WHEN UPPER(d.especialidad) = 'PEDIATRÍA' 
+        THEN d.doctor_no 
+    END) AS pediatras, 
+
+    MAX(p.salario) AS salario_maximo, 
+    MIN(p.salario) AS salario_minimo 
+
+FROM hospital h 
+LEFT JOIN sala s ON h.hospital_cod = s.hospital_cod 
+LEFT JOIN plantilla p ON h.hospital_cod = p.hospital_cod 
+LEFT JOIN doctor d ON h.hospital_cod = d.hospital_cod 
+LEFT JOIN ocupacion o ON h.hospital_cod = o.hospital_cod 
+LEFT JOIN enfermo e ON o.inscripcion = e.inscripcion 
+
+GROUP BY h.hospital_cod, h.nombre, h.num_cama 
+ORDER BY hospital;
