@@ -1,0 +1,85 @@
+-- Explicacion del proyecto
+-- Este proyecto contiene el diseño y la implementación de una base de datos relacional para un sistema de comercio electrónico, este proyecto incluye scripts de optimización y consultas analíticas de negocio.
+-- Este proyecto fue realizado con la intencion de poner en practica la definición de tablas, llaves primarias y foráneas, consultas utilizando `JOIN`, `GROUP BY` y funciones de insercion de datos
+
+
+-- Creación de base pasa simulación
+CREATE TABLE clientes (
+    cliente_id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    fecha_registro DATE DEFAULT CURRENT_DATE
+);
+
+CREATE TABLE productos (
+    producto_id SERIAL PRIMARY KEY,
+    nombre_producto VARCHAR(100) NOT NULL,
+    precio DECIMAL(10, 2) NOT NULL,
+    stock INT NOT NULL
+);
+
+CREATE TABLE pedidos (
+    pedido_id SERIAL PRIMARY KEY,
+    cliente_id INT REFERENCES clientes(cliente_id) ON DELETE CASCADE,
+    fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estado VARCHAR(50) DEFAULT 'Procesando'
+);
+
+CREATE TABLE detalles_pedidos (
+    detalle_id SERIAL PRIMARY KEY,
+    pedido_id INT REFERENCES pedidos(pedido_id) ON DELETE CASCADE,
+    producto_id INT REFERENCES productos(producto_id),
+    cantidad INT NOT NULL,
+    precio_unitario DECIMAL(10, 2) NOT NULL
+);
+
+
+-- Bloque de insercion
+INSERT INTO clientes (nombre, email) VALUES
+('Juan Pérez', 'juan.perez@email.com'),
+('María López', 'maria.lopez@email.com'),
+('Carlos Gómez', 'carlos.gomez@email.com'),
+('Ana Rodríguez', 'ana.rodriguez@email.com');
+
+INSERT INTO productos (nombre_producto, precio, stock) VALUES
+('Teclado Mecánico RGB', 85.000, 15),
+('Mouse Inalámbrico Pro', 45.000, 3),
+('Monitor 24" IPS Full HD', 180.000, 8),
+('Auriculares Gamer con Micro', 60.000, 0),
+('Alfombrilla XL', 20.000, 25);
+
+INSERT INTO pedidos (cliente_id, estado) VALUES
+(1, 'Completado'),
+(2, 'Completado'),
+(3, 'Procesando'),
+(1, 'Completado');
+
+INSERT INTO detalles_pedidos (pedido_id, producto_id, cantidad, precio_unitario) VALUES
+(1, 1, 1, 85.000), -- Juan compró teclado
+(1, 2, 1, 45.000), -- Juan compró mouse
+(2, 3, 2, 180.000), -- María compró 2 monitores
+(3, 4, 1, 60.000), -- Carlos compró auriculares (sin stock ahora)
+(4, 1, 1, 85.000); -- Juan compró otro teclado
+
+
+--Bloque de consultas
+-- Clientes que más dinero han gastado
+SELECT c.nombre, c.email, SUM(dp.precio_unitario * dp.cantidad) AS total_gastado
+FROM clientes c
+JOIN pedidos p ON c.cliente_id = p.cliente_id
+JOIN detalles_pedidos dp ON p.pedido_id = dp.pedido_id
+GROUP BY c.cliente_id, c.nombre, c.email
+ORDER BY total_gastado DESC;
+
+-- Productos con stock crítico (menos de 5 unidades)
+SELECT nombre_producto, stock, precio 
+FROM productos 
+WHERE stock < 5;
+
+-- Producto más vendido en total de unidades
+SELECT pr.nombre_producto, SUM(dp.cantidad) AS unidades_vendidas
+FROM productos pr
+JOIN detalles_pedidos dp ON pr.producto_id = dp.producto_id
+GROUP BY pr.producto_id, pr.nombre_producto
+ORDER BY unidades_vendidas DESC
+LIMIT 1;
