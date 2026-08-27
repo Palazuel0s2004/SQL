@@ -1,0 +1,193 @@
+CREATE DATABASE IF NOT EXISTS pos_db;
+USE pos_db;
+
+CREATE TABLE clientes (
+    id_cliente     INT AUTO_INCREMENT PRIMARY KEY,
+    nombre         VARCHAR(100) NOT NULL,
+    documento      VARCHAR(20) NOT NULL UNIQUE,
+    telefono       VARCHAR(20),
+    email          VARCHAR(100),
+    fecha_registro DATE DEFAULT (CURRENT_DATE)
+);
+select * from clientes;
+
+CREATE TABLE cuentas_cliente (
+    id_cuenta      INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente     INT NOT NULL UNIQUE,
+    puntos         INT DEFAULT 0,
+    fecha_apertura DATE DEFAULT (CURRENT_DATE),
+    CONSTRAINT fk_cuenta_cliente FOREIGN KEY (id_cliente)
+        REFERENCES clientes(id_cliente)
+);
+select * from cuentas_cliente;
+
+CREATE TABLE empleados (
+    id_empleado    INT AUTO_INCREMENT PRIMARY KEY,
+    nombre         VARCHAR(100) NOT NULL,
+    cargo          VARCHAR(50),
+    fecha_ingreso  DATE
+);
+select * from empleados;
+
+CREATE TABLE productos (
+    id_producto    INT AUTO_INCREMENT PRIMARY KEY,
+    nombre         VARCHAR(100) NOT NULL,
+    precio         DECIMAL(10,2) NOT NULL,
+    stock          INT DEFAULT 0
+);
+select * from productos;
+
+CREATE TABLE ventas (
+    id_venta       INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente     INT,
+    id_empleado    INT NOT NULL,
+    fecha_venta    DATETIME DEFAULT CURRENT_TIMESTAMP,
+    total          DECIMAL(10,2) DEFAULT 0,
+    CONSTRAINT fk_venta_cliente FOREIGN KEY (id_cliente)
+        REFERENCES clientes(id_cliente),
+    CONSTRAINT fk_venta_empleado FOREIGN KEY (id_empleado)
+        REFERENCES empleados(id_empleado)
+);
+select * from ventas;
+
+CREATE TABLE detalle_venta (
+    id_detalle     INT AUTO_INCREMENT PRIMARY KEY,
+    id_venta       INT NOT NULL,
+    id_producto    INT NOT NULL,
+    cantidad       INT NOT NULL,
+    precio_unitario DECIMAL(10,2) NOT NULL,
+    CONSTRAINT fk_detalle_venta FOREIGN KEY (id_venta)
+        REFERENCES ventas(id_venta),
+    CONSTRAINT fk_detalle_producto FOREIGN KEY (id_producto)
+        REFERENCES productos(id_producto),
+    UNIQUE (id_venta, id_producto)
+);
+
+select * from detalle_venta;
+
+-- Datos iniciales
+INSERT INTO clientes (nombre, documento, telefono, email) VALUES
+('Laura Benítez', '4123456', '0981123456', 'laura.benitez@correo.com'),
+('Marcos Duarte', '3987654', '0982654321', 'marcos.duarte@correo.com'),
+('Ana Torales', '4555222', '0983111222', 'ana.torales@correo.com');
+
+INSERT INTO cuentas_cliente (id_cliente, puntos) VALUES
+(1, 120),
+(2, 45),
+(3, 0);
+
+INSERT INTO empleados (nombre, cargo, fecha_ingreso) VALUES
+('Ricardo Fleitas', 'Cajero', '2023-02-01'),
+('Sofía Cáceres', 'Cajera', '2024-06-15');
+
+INSERT INTO productos (nombre, precio, stock) VALUES
+('Gaseosa 1.5L', 8500, 50),
+('Pan de sal (unidad)', 1500, 200),
+('Yerba 500g', 12000, 80),
+('Fideo 500g', 6500, 100),
+('Aceite 900ml', 15000, 60);
+
+INSERT INTO ventas (id_cliente, id_empleado, total) VALUES
+(1, 1, 25500),
+(2, 2, 20000);
+
+INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_unitario) VALUES
+(1, 1, 1, 8500),
+(1, 3, 1, 12000),
+(1, 2, 3, 1500),
+(2, 4, 2, 6500),
+(2, 5, 1, 15000) ON DUPLICATE KEY UPDATE cantidad = VALUES(cantidad);
+
+-- INSERT para nuevo cliente
+INSERT INTO clientes (nombre, documento, telefono, email)
+VALUES ('Diego Ramírez', '4789456', '0984333444', 'diego.ramirez@correo.com');
+
+-- UPDATE para ajustar stock tras una venta
+UPDATE productos
+SET stock = stock - 1
+WHERE id_producto = 1;
+
+-- DELETE para eliminar un producto sin ventas asociadas
+DELETE FROM productos
+WHERE id_producto = 5
+  AND id_producto NOT IN (SELECT id_producto FROM detalle_venta);
+
+-- Ventas con cliente y empleado
+SELECT v.id_venta, c.nombre AS cliente, e.nombre AS empleado, v.fecha_venta, v.total
+FROM ventas v
+JOIN empleados e ON v.id_empleado = e.id_empleado
+LEFT JOIN clientes c ON v.id_cliente = c.id_cliente;
+
+-- Detalle de productos por venta
+SELECT dv.id_venta, p.nombre AS producto, dv.cantidad, dv.precio_unitario,
+       (dv.cantidad * dv.precio_unitario) AS subtotal
+FROM detalle_venta dv
+JOIN productos p ON dv.id_producto = p.id_producto
+ORDER BY dv.id_venta;
+
+-- Total vendido por empleado
+SELECT e.nombre AS empleado, COUNT(v.id_venta) AS cantidad_ventas, SUM(v.total) AS total_vendido
+FROM empleados e
+JOIN ventas v ON e.id_empleado = v.id_empleado
+GROUP BY e.id_empleado, e.nombre;
+
+-- Clientes con su cuenta de puntos (relación 1 a 1)
+SELECT c.nombre, cc.puntos, cc.fecha_apertura
+FROM clientes c
+JOIN cuentas_cliente cc ON c.id_cliente = cc.id_cliente;
+
+-- Productos más vendidos (relación N a M resuelta)
+SELECT p.nombre, SUM(dv.cantidad) AS unidades_vendidas
+FROM detalle_venta dv
+JOIN productos p ON dv.id_producto = p.id_producto
+GROUP BY p.id_producto, p.nombre
+ORDER BY unidades_vendidas DESC;
+
+-- Mis datos
+INSERT INTO clientes (nombre, documento, telefono, email) 
+VALUES ('Carlos Ezequiel Palazuelos López', '5123456', '0982497147', 'ezequielpalazuelo2004@gmail.com');
+
+-- fila cuenta_clientes
+INSERT INTO cuentas_cliente (id_cliente, puntos) 
+VALUES (5, 50);
+
+-- Actualizacion de precio de la gaseosa
+UPDATE productos
+SET precio = 9000, stock = stock + 10
+WHERE id_producto = 1;
+
+-- Venta Nueva
+INSERT INTO ventas (id_cliente, id_empleado, total) 
+VALUES (5, 1, 28500);
+
+INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_unitario) 
+VALUES (5, 1, 2, 9000);
+
+INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_unitario) 
+VALUES (5, 3, 1, 10500);
+
+
+-- Su venta con su nombre de cliente y el empleado que la registró
+SELECT v.id_venta, c.nombre AS cliente, e.nombre AS empleado, v.fecha_venta, v.total
+FROM ventas v
+JOIN empleados e ON v.id_empleado = e.id_empleado
+JOIN clientes c ON v.id_cliente = c.id_cliente
+WHERE c.nombre = 'Carlos Ezequiel Palazuelos López';
+
+
+-- El detalle de productos de esa venta con el subtotal de cada línea
+SELECT dv.id_venta, p.nombre AS producto, dv.cantidad, dv.precio_unitario,
+       (dv.cantidad * dv.precio_unitario) AS subtotal
+FROM detalle_venta dv
+JOIN productos p ON dv.id_producto = p.id_producto
+JOIN ventas v ON dv.id_venta = v.id_venta
+JOIN clientes c ON v.id_cliente = c.id_cliente
+WHERE c.nombre = 'Carlos Ezequiel Palazuelos López';
+
+-- Sus puntos actuales en cuentas_cliente
+SELECT c.nombre AS cliente, cc.puntos, cc.fecha_apertura
+FROM clientes c
+JOIN cuentas_cliente cc ON c.id_cliente = cc.id_cliente
+WHERE c.nombre = 'Carlos Ezequiel Palazuelos López';
+
+
