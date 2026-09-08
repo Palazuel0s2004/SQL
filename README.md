@@ -4,13 +4,13 @@ Este repositorio almacena mis scripts y modelos relacionales enfocados en la adm
 
 ## 📂 Estructura del Repositorio
 
-El repositorio contiene los siguientes proyectos y casos de estudio[cite: 2]:
+El repositorio contiene los siguientes proyectos y casos de estudio:
 
 | Archivo / Directorio | Descripción |
 | :--- | :--- |
-| `Trabajo_Final_BDS_1` | **Trabajo Final.** Proyecto integrador correspondiente a la materia de Base de Datos 1, consolidando los conceptos fundamentales de diseño y consultas[cite: 2]. |
-| `Caso_POS_sql` | **Caso de Estudio POS.** Modelado y scripts de prueba para un sistema de Punto de Venta (Point of Sale), abarcando transacciones e inventario[cite: 2]. |
-| `Simulacion_Comercio_DB` | **Simulación Comercial.** Diseño de una base de datos estructurada para simular operaciones, ventas y gestión de un entorno comercial[cite: 2]. |
+| `Trabajo_Final_BDS_1` | **Trabajo Final.** Proyecto integrador correspondiente a la materia de Base de Datos 1, consolidando los conceptos fundamentales de diseño y consultas. |
+| `Caso_POS_sql` | **Caso de Estudio POS.** Modelado y scripts de prueba para un sistema de Punto de Venta (Point of Sale), abarcando transacciones e inventario. |
+| `Simulacion_Comercio_DB` | **Simulación Comercial.** Diseño de una base de datos estructurada para simular operaciones, ventas y gestión de un entorno comercial. |
 
 ## 🛠️ Tecnologías y Herramientas
 * **Lenguaje:** SQL
